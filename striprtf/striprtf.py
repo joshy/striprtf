@@ -67,9 +67,8 @@ def rtf_to_text(text):
     'rquote': '\u2019',
     'ldblquote': '\201C',
     'rdblquote': '\u201D',
-    'trowd': '|',
-    'cell': '|',
-    'row':'\n'
+    'row':'\n',
+    'cell': '|'
     }
     stack = []
     ignorable = False       # Whether this group (and all inside it) are "ignorable".

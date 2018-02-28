@@ -99,3 +99,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+.vscode
+
+.pypirc
+
+# ignore files starting with numbers (mostly medical reports)
+tests/rtf/[0-9]*.rtf

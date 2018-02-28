@@ -2,7 +2,7 @@ import re
 
 """
 Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
-and modified for better display of tables.
+and modified for better output of tables.
 """
 PATTERN  = re.compile(r"\\([a-z]{1,32})(-?\d{1,10})?[ ]?|\\'([0-9a-f]{2})|\\([^a-z])|([{}])|[\r\n]+|(.)", re.I)
 

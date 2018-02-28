@@ -1,4 +1,5 @@
 # striprtf
+[![Build Status](https://api.travis-ci.org/joshy/striprtf.svg?branch=master)](https://travis-ci.org/joshy/striprtf)
 
 ## Purpose
 This is a simple library to convert rtf files to python strings. A lot of

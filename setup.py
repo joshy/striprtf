@@ -7,7 +7,7 @@ setup(
   author = 'Joshy Cyriac',
   author_email = 'j.cyriac@gmail.com',
   url = 'https://github.com/joshy/striprtf', # use the URL to the github repo
-  download_url = 'https://github.com/joshy/mypackage/archive/0.1.tar.gz', # I'll explain this in a second
+  download_url = 'https://github.com/joshy/striprtf/archive/0.1.tar.gz', # I'll explain this in a second
   keywords = ['rtf'],
   classifiers = [],
 )

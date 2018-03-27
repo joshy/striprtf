@@ -10,12 +10,12 @@ TEXT_DIR = Path.cwd() / 'tests' / 'text'
 class TestSimple(unittest.TestCase):
 
     def test_empty(self):
-        hello_rtf = RTF_DIR / 'hello.rtf'
-        hello_txt = TEXT_DIR / 'hello.txt'
+        example_rtf = RTF_DIR / 'hello.rtf'
+        example_txt = TEXT_DIR / 'hello.txt'
 
-        with hello_rtf.open() as source:
+        with example_rtf.open() as source:
             result = rtf_to_text(source.read())
-        with hello_txt.open() as destination:
+        with example_txt.open() as destination:
             self.assertEqual(destination.read(), result)
 
     def test_table(self):

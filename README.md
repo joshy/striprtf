@@ -12,3 +12,9 @@ and Saving of files is not part of it.
 had. The next best thing was this gist:
 https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 Very few additions where made, e.g. better formatting tables.
+
+## Pushing to PyPi
+Run command
+```
+python setup.py sdist upload -r pypi
+```

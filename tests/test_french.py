@@ -15,7 +15,6 @@ class TestSimple(unittest.TestCase):
 
         with example_rtf.open() as source:
             result = rtf_to_text(source.read())
-            print(result)
         with example_txt.open() as destination:
             self.assertEqual(destination.read(), result)
 

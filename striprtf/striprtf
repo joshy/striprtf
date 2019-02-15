@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+import argparse
+
+from striprtf.striprtf import rtf_to_text
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("rtf_file", type=argparse.FileType("r", encoding="UTF-8"))
+    args = parser.parse_args()
+    in_rtf = args.rtf_file.read()
+    args.rtf_file.close()
+
+    content = rtf_to_text(in_rtf)
+    print(content)
+
+
+if __name__ == "__main__":
+    main()

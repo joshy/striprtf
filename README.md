@@ -14,6 +14,10 @@ text = rtf_to_text(rtf)
 print(text)
 ```
 
+## How to use online
+If you don't want to install, there is also an online version available at https://striprtf.dev
+
+
 ## History
 [Pyth](https://github.com/brendonh/pyth) was not working for the rtf files I
 had. The next best thing was this gist:

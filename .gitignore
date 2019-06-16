@@ -106,3 +106,6 @@ ENV/
 
 # ignore files starting with numbers (mostly medical reports)
 tests/rtf/[0-9]*.rtf
+
+
+.DS_Store

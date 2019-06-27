@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.5 - 27.05.2019
+  * fix for #3
+
 ## v0.0.4 - 10.02.2019
   * added cli
 

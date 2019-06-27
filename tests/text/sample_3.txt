@@ -1,0 +1,4 @@
+A	produto de RTU de bexiga
+B	uretra  prostática
+C	assoalho vesical
+D	base da lesão de assoalho

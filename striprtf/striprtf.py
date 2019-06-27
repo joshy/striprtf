@@ -1,14 +1,12 @@
 import re
-
 """
 Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 and modified for better output of tables.
 """
-PATTERN  = re.compile(r"\\([a-z]{1,32})(-?\d{1,10})?[ ]?|\\'([0-9a-f]{2})|\\([^a-z])|([{}])|[\r\n]+|(.)", re.I)
 
-def rtf_to_text(text):
-    # control words which specify a "destination".
-    destinations = frozenset((
+
+# control words which specify a "destination".
+destinations = frozenset((
     'aftncn','aftnsep','aftnsepc','annotation','atnauthor','atndate','atnicn','atnid',
     'atnparent','atnref','atntime','atrfend','atrfstart','author','background',
     'bkmkend','bkmkstart','blipuid','buptim','category','colorschememapping',
@@ -50,8 +48,10 @@ def rtf_to_text(text):
     'xmlattrname','xmlattrvalue','xmlclose','xmlname','xmlnstbl',
     'xmlopen',
     ))
-    # Translation of some special characters.
-    specialchars = {
+
+
+# Translation of some special characters.
+specialchars = {
     'par': '\n',
     'sect': '\n\n',
     'page': '\n\n',
@@ -71,6 +71,10 @@ def rtf_to_text(text):
     'cell': '|',
     'nestcell': '|'
     }
+
+PATTERN  = re.compile(r"\\([a-z]{1,32})(-?\d{1,10})?[ ]?|\\'([0-9a-f]{2})|\\([^a-z])|([{}])|[\r\n]+|(.)", re.I)
+
+def rtf_to_text(text):
     stack = []
     ignorable = False       # Whether this group (and all inside it) are "ignorable".
     ucskip = 1              # Number of ASCII characters to skip after a unicode character.
@@ -86,7 +90,7 @@ def rtf_to_text(text):
             elif brace == '}':
                 # Pop state
                 try:
-                ucskip,ignorable = stack.pop()
+                    ucskip,ignorable = stack.pop()
                 # sample_3.rtf throws an IndexError because of stack being empty.
                 # don't know right now how this could happen, so for now this is
                 # a ugly hack to prevent it

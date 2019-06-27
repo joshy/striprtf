@@ -85,7 +85,14 @@ def rtf_to_text(text):
                 stack.append((ucskip,ignorable))
             elif brace == '}':
                 # Pop state
+                try:
                 ucskip,ignorable = stack.pop()
+                # sample_3.rtf throws an IndexError because of stack being empty.
+                # don't know right now how this could happen, so for now this is
+                # a ugly hack to prevent it
+                except IndexError:
+                    ucskip = 0
+                    ignorable = True
         elif char: # \x (not a letter)
             curskip = 0
             if char == '~':

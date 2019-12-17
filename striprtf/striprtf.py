@@ -4,7 +4,6 @@ Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 and modified for better output of tables.
 """
 
-
 # control words which specify a "destination".
 destinations = frozenset((
     'aftncn','aftnsep','aftnsepc','annotation','atnauthor','atndate','atnicn','atnid',
@@ -101,12 +100,18 @@ def rtf_to_text(text):
             curskip = 0
             if char == '~':
                 if not ignorable:
-                    out.append('\xA0')
+                    out.append('\xA0') # NBSP
             elif char in '{}\\':
                 if not ignorable:
                     out.append(char)
             elif char == '*':
                 ignorable = True
+            elif char == '\n':
+                if not ignorable:
+                    out.append('\x0A')  # LF
+            elif char == '\r':
+                if not ignorable:
+                    out.append('\x0D')  # CR
         elif word: # \foo
             curskip = 0
             if word in destinations:

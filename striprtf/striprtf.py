@@ -81,7 +81,6 @@ def rtf_to_text(text):
     out = []                # Output buffer.
     for match in PATTERN.finditer(text):
         word,arg,hex,char,brace,tchar = match.groups()
-        print('-*-')
         if brace:
             curskip = 0
             if brace == '{':

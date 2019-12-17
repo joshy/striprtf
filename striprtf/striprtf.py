@@ -101,12 +101,16 @@ def rtf_to_text(text):
             curskip = 0
             if char == '~':
                 if not ignorable:
-                    out.append('\xA0')
+                    out.append('\xA0') # NBSP
             elif char in '{}\\':
                 if not ignorable:
                     out.append(char)
             elif char == '*':
                 ignorable = True
+            elif char == '\n':
+                if not ignorable:
+                    out.append('\x0D')  # CR
+                    out.append('\x0A')  # LF
         elif word: # \foo
             curskip = 0
             if word in destinations:

@@ -4,14 +4,14 @@ from filecmp import cmp
 
 from striprtf.striprtf import rtf_to_text
 
-RTF_DIR = Path.cwd() / 'tests' / 'rtf'
-TEXT_DIR = Path.cwd() / 'tests' / 'text'
+RTF_DIR = Path.cwd() / "tests" / "rtf"
+TEXT_DIR = Path.cwd() / "tests" / "text"
+
 
 class TestSimple(unittest.TestCase):
-
     def test_empty(self):
-        example_rtf = RTF_DIR / 'french.rtf'
-        example_txt = TEXT_DIR / 'french.txt'
+        example_rtf = RTF_DIR / "french.rtf"
+        example_txt = TEXT_DIR / "french.txt"
 
         with example_rtf.open() as source:
             result = rtf_to_text(source.read())

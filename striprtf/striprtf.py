@@ -4,7 +4,6 @@ Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 and modified for better output of tables.
 """
 
-
 # control words which specify a "destination".
 destinations = frozenset((
     'aftncn','aftnsep','aftnsepc','annotation','atnauthor','atndate','atnicn','atnid',
@@ -82,6 +81,7 @@ def rtf_to_text(text):
     out = []                # Output buffer.
     for match in PATTERN.finditer(text):
         word,arg,hex,char,brace,tchar = match.groups()
+        print('-*-')
         if brace:
             curskip = 0
             if brace == '{':
@@ -109,8 +109,10 @@ def rtf_to_text(text):
                 ignorable = True
             elif char == '\n':
                 if not ignorable:
-                    out.append('\x0D')  # CR
                     out.append('\x0A')  # LF
+            elif char == '\r':
+                if not ignorable:
+                    out.append('\x0D')  # CR
         elif word: # \foo
             curskip = 0
             if word in destinations:

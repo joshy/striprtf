@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 from filecmp import cmp
 
-from striprtf.striprtf import rtf_to_text, extract_tables
+from striprtf.striprtf import rtf_to_text
 
 RTF_DIR = Path.cwd() / "tests" / "rtf"
 TXT_DIR = Path.cwd() / "tests" / "text"

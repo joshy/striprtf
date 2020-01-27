@@ -26,7 +26,8 @@ https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 Very few additions where made, e.g. better formatting of tables.
 
 ## Pushing to PyPi
-Run command
+Run commands
 ```
+python setup.py sdist bdist_wheel
 python setup.py sdist upload -r pypi
 ```

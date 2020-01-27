@@ -1,7 +1,10 @@
 # Changelog
 
+## v0.0.7 - 27.01.2020
+ * Added `__version__` attribute
+
 ## v0.0.6 - 17.12.2019
- * Add CR LR processing - contributed by [Simon](https://github.com/UnacceptableBehaviour)
+ * Add CR LR processing (contributed by [Simon](https://github.com/UnacceptableBehaviour))
 
 ## v0.0.5 - 27.05.2019
  * fix for #3

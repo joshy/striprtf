@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.8 - 21.02.2020
+ * Removed f-string in setup.py (below python 3.6 fails to install)
+ 
 ## v0.0.7 - 27.01.2020
  * Added `__version__` attribute
 

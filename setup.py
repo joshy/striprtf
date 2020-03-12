@@ -22,7 +22,7 @@ setup(
     author="Joshy Cyriac",
     author_email="j.cyriac@gmail.com",
     url="https://github.com/joshy/striprtf",
-    download_url=f"https://github.com/joshy/striprtf/archive/v{about['__version__']}.tar.gz",
+    download_url="https://github.com/joshy/striprtf/archive/v%s.tar.gz" % about['__version__'],
     keywords=["rtf"],
     scripts=["striprtf/striprtf"],
     classifiers=[],

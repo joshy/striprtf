@@ -134,14 +134,14 @@ def rtf_to_text(text):
                 if arg is None:
                     curskip = ucskip
                 else:
-                c = int(arg)
+                    c = int(arg)
                     if c < 0:
                         c += 0x10000
                     if c > 127:
                         out.append(chr(c))  # NOQA
                     else:
                         out.append(chr(c))
-                curskip = ucskip
+                    curskip = ucskip
         elif hex:  # \'xx
             if curskip > 0:
                 curskip -= 1

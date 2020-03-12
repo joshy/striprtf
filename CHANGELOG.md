@@ -1,8 +1,13 @@
 # Changelog
 
+## v0.0.9 - 12.3.2020
+ * Fix for https://github.com/joshy/striprtf/issues/6
+ * Added version to cli
+ * Switched to pytest
+
 ## v0.0.8 - 21.02.2020
  * Removed f-string in setup.py (below python 3.6 fails to install)
- 
+
 ## v0.0.7 - 27.01.2020
  * Added `__version__` attribute
 

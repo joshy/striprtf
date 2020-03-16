@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.10 - 16.03.2020
+ * Wrong upload to pypi
+
 ## v0.0.9 - 12.3.2020
  * Fix for https://github.com/joshy/striprtf/issues/6
  * Added version to cli

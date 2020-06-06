@@ -1,4 +1,7 @@
 import re
+import csv
+from tabulate import tabulate
+
 """
 Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 and modified for better output of tables.
@@ -48,7 +51,7 @@ destinations = frozenset((
     'wgrffmtfilter','windowcaption','writereservation','writereservhash','xe','xform',
     'xmlattrname','xmlattrvalue','xmlclose','xmlname','xmlnstbl',
     'xmlopen',
-    ))
+))
 # fmt: on
 
 
@@ -72,7 +75,7 @@ specialchars = {
     "row": "\n",
     "cell": "|",
     "nestcell": "|",
-    }
+}
 
 PATTERN = re.compile(
     r"\\([a-z]{1,32})(-?\d{1,10})?[ ]?|\\'([0-9a-f]{2})|\\([^a-z])|([{}])|[\r\n]+|(.)",
@@ -165,3 +168,33 @@ def rtf_to_text(text):
             elif not ignorable:
                 out.append(tchar)
     return "".join(out)
+
+
+def extract_tables(rtf_text):
+    plain_text = rtf_to_text(rtf_text)
+
+    lines = plain_text.splitlines()
+    # Check for multiple tables and return list of tables!
+    # also check if column sizes changes -> new table
+    tables = []
+    values = []
+    for l in lines:
+        splitted = l.split("|")
+        columns = [part for part in splitted if part.strip()]
+        if len(columns) > 1:
+            prev_columns = None
+            if columns == prev_columns or prev_columns is None:
+                values.append(splitted)
+                prev_columns = columns
+        else:
+            if len(values) > 0:
+                tables.append(values)
+            values = []
+            prev_columns = None
+
+    for i, table in enumerate(tables):
+        with open(f"example-{i}.csv", "wt") as f:
+            csv_writer = csv.writer(f)
+            csv_writer.writerows(table)
+
+    return tables

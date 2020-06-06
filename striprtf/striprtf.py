@@ -79,8 +79,16 @@ PATTERN = re.compile(
     re.I,
 )
 
+HYPERLINKS = re.compile(
+    r"(\{\\field.*HYPERLINK\s(.*)\}\}\s.*\s(.*)\}{3,})",re.I
+)
+
+def _replace_hyperlinks(text):
+    l = re.sub(HYPERLINKS, r" \3(\2)", text)
+    return l
 
 def rtf_to_text(text):
+    text = _replace_hyperlinks(text)
     stack = []
     ignorable = False  # Whether this group (and all inside it) are "ignorable".
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.

@@ -9,7 +9,7 @@ TEXT_DIR = Path.cwd() / "tests" / "text"
 
 
 class TestHyperlinks(unittest.TestCase):
-    def test_empty(self):
+    def test_hyperlinks(self):
         example_rtf = RTF_DIR / "hyperlinks.rtf"
         example_txt = TEXT_DIR / "hyperlinks.txt"
 

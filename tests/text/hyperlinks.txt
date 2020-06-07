@@ -1,1 +1,4 @@
-wikipedia("https://www.wikipedia.org")
+Wikipedia("https://www.wikipedia.org")
+Text
+
+Search("duckduckgo.com/")

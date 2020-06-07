@@ -1,4 +1,5 @@
 import re
+
 """
 Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 and modified for better output of tables.
@@ -72,20 +73,27 @@ specialchars = {
     "row": "\n",
     "cell": "|",
     "nestcell": "|",
-    }
+}
 
 PATTERN = re.compile(
     r"\\([a-z]{1,32})(-?\d{1,10})?[ ]?|\\'([0-9a-f]{2})|\\([^a-z])|([{}])|[\r\n]+|(.)",
-    re.I,
+    re.IGNORECASE,
 )
 
 HYPERLINKS = re.compile(
-    r"(\{\\field.*HYPERLINK\s(.*)\}\}\s.*\s(.*)\}{3,})",re.I
+    r"(\{\\field\{\n?\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}\}\s?\{.*\s+(.*)\}{3})",
+    re.IGNORECASE,
 )
 
+
 def _replace_hyperlinks(text):
-    l = re.sub(HYPERLINKS, r" \3(\2)", text)
-    return l
+    def _is_hyperlink(match):
+        groups = match.groups()
+        return f"{groups[-1]}({groups[-2]})"
+
+    replaced = re.sub(HYPERLINKS, _is_hyperlink, text)
+    return replaced
+
 
 def rtf_to_text(text):
     text = _replace_hyperlinks(text)

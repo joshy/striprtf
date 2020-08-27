@@ -20,7 +20,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Joshy Cyriac",
-    author_email="j.cyriac@gmail.com",
+    author_email="joshy@posteo.ch",
     url="https://github.com/joshy/striprtf",
     download_url="https://github.com/joshy/striprtf/archive/v%s.tar.gz" % about['__version__'],
     keywords=["rtf"],

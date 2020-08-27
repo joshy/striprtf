@@ -67,7 +67,7 @@ specialchars = {
     "bullet": "\u2022",
     "lquote": "\u2018",
     "rquote": "\u2019",
-    "ldblquote": "\201C",
+    "ldblquote": "\u201C",
     "rdblquote": "\u201D",
     "row": "\n",
     "cell": "|",

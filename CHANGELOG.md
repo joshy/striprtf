@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.11 - 27.08.2020
+ * Fixed ldblquote (spotted by Ziyang(Claude) Hu)
+
 ## v0.0.10 - 16.03.2020
  * Wrong upload to pypi
 

@@ -109,3 +109,6 @@ tests/rtf/[0-9]*.rtf
 
 
 .DS_Store
+
+# codespaces
+pythonenv3.8

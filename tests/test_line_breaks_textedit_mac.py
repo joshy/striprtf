@@ -19,8 +19,6 @@ class TestSimple(unittest.TestCase):
 
         with simple_table_rtf.open() as source:
             result = rtf_to_text(source.read())
-            with open("o.txt", "w") as f:
-                f.write(result)
         with simple_table_txt.open() as destination:
             self.assertEqual(destination.read(), result)
 

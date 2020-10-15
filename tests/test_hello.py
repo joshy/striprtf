@@ -1,6 +1,5 @@
 import unittest
 from pathlib import Path
-from filecmp import cmp
 
 from striprtf.striprtf import rtf_to_text
 

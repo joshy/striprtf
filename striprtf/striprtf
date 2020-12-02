@@ -3,17 +3,14 @@ import argparse
 import io
 
 from striprtf.striprtf import rtf_to_text
-
-about = {}
-with io.open("striprtf/_version.py", "r", encoding="utf-8") as f:
-    exec(f.read(), about)
+from striprtf._version  import __version__ as version
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("rtf_file", type=argparse.FileType("r", encoding="UTF-8"))
     parser.add_argument(
-        "--version", action="version", version="%s" % about["__version__"]
+        "--version", action="version", version="%s" % version
     )
     args = parser.parse_args()
     in_rtf = args.rtf_file.read()

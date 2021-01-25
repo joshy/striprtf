@@ -1,0 +1,6 @@
+macOS text edit hyperlink
+
+
+First one is: striprtf.dev("striprtf.dev") (plain)
+
+Second one is: github("http://github.com/joshy/striprtf") (real)

@@ -81,19 +81,27 @@ PATTERN = re.compile(
 )
 
 HYPERLINKS = re.compile(
-    r"(\{\\field\{\n?\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}\}\s?\{.*\s+(.*)\}{3})",
-    re.IGNORECASE,
+    r"(\{\\field\{\n?\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}{2}\s?\{.*\s+(.*)\}{2})",
+    re.IGNORECASE
 )
 
 
 def _replace_hyperlinks(text):
     def _is_hyperlink(match):
         groups = match.groups()
-        return f"{groups[-1]}({groups[-2]})"
+        link_text = groups[-1]
+        link_destination = groups[-2]
+        # why this ugly hack? the hyperlink regex can't cope with the regex ending with
+        # either }}} or }}. So we are capturing two and if there is another
+        # one we remove it here
+        if link_text[-1] == "}":
+            g1 = link_text[:-1]
+        else:
+            g1 = link_text
+        return f"{g1}({link_destination})"
 
-    replaced = re.sub(HYPERLINKS, _is_hyperlink, text)
-    return replaced
-
+    return re.sub(HYPERLINKS, _is_hyperlink, text)
+    
 
 def rtf_to_text(text):
     text = _replace_hyperlinks(text)

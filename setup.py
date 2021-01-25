@@ -26,4 +26,5 @@ setup(
     keywords=["rtf"],
     scripts=["striprtf/striprtf"],
     classifiers=[],
+    python_requires='>3.6',
 )

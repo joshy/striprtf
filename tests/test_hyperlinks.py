@@ -18,3 +18,24 @@ class TestHyperlinks(unittest.TestCase):
 
         with example_txt.open() as destination:
             self.assertEqual(destination.read(), result)
+
+    def test_mac_textedit(self):
+        example_rtf = RTF_DIR / "mac_textedit_hyperlink.rtf"
+        example_txt = TEXT_DIR / "mac_textedit_hyperlink.txt"
+
+        with example_rtf.open() as source:
+            result = rtf_to_text(source.read())
+
+        with example_txt.open() as destination:
+            self.assertEqual(destination.read(), result)
+
+    def test_user_sample(self):
+        example_rtf = RTF_DIR / "Example_text.rtf"
+        example_txt = TEXT_DIR / "Example_text.txt"
+
+        with example_rtf.open() as source:
+            result = rtf_to_text(source.read())
+            print(result)
+
+        with example_txt.open() as destination:
+            self.assertEqual(destination.read(), result)

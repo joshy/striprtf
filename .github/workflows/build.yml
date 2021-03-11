@@ -1,4 +1,4 @@
-name: striprft build
+name: striprtf build
 on: [push]
 jobs:
   build:

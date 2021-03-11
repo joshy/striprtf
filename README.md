@@ -1,5 +1,5 @@
 # striprtf
-![Build status](https://github.com/joshy/striprtf/workflows/striprtf%20build/badge.svg)
+[![Build status](https://github.com/joshy/striprtf/workflows/striprtf%20build/badge.svg)](https://github.com/joshy/striprtf/actions)
 
 ## Purpose
 This is a simple library to convert rtf files to python strings. A lot of

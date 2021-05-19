@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.13 - 19.05.2021
+ * Fixes #17. Restore python2 compatibility. 
+   This will be the last version to support that!
+
+## v0.0.12 - 02.12.2020
+ * migrate to github actions
+
 ## v0.0.11 - 27.08.2020
  * Fixed ldblquote (spotted by Ziyang(Claude) Hu)
 

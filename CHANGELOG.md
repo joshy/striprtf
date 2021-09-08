@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.14 - 08.09.2021
+ * Fixes #18. Small code improvements
+
 ## v0.0.13 - 19.05.2021
  * Fixes #17. Restore python2 compatibility. 
    This will be the last version to support that!

@@ -95,12 +95,12 @@ def rtf_to_text(text):
                 stack.append((ucskip, ignorable))
             elif brace == "}":
                 # Pop state
-                try:
+                if stack:
                     ucskip, ignorable = stack.pop()
                 # sample_3.rtf throws an IndexError because of stack being empty.
                 # don't know right now how this could happen, so for now this is
                 # a ugly hack to prevent it
-                except IndexError:
+                else:
                     ucskip = 0
                     ignorable = True
         elif char:  # \x (not a letter)
@@ -137,20 +137,14 @@ def rtf_to_text(text):
                     c = int(arg)
                     if c < 0:
                         c += 0x10000
-                    if c > 127:
-                        out.append(chr(c))  # NOQA
-                    else:
-                        out.append(chr(c))
+                    out.append(chr(c))
                     curskip = ucskip
         elif hex:  # \'xx
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
                 c = int(hex, 16)
-                if c > 127:
-                    out.append(chr(c))  # NOQA
-                else:
-                    out.append(chr(c))
+                out.append(chr(c))  
         elif tchar:
             if curskip > 0:
                 curskip -= 1

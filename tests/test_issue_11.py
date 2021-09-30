@@ -7,10 +7,10 @@ RTF_DIR = Path.cwd() / "tests" / "rtf"
 TEXT_DIR = Path.cwd() / "tests" / "text"
 
 
-class TestUnicodePolish(unittest.TestCase):
+class TestUnicodeJapanese(unittest.TestCase):
     def test_empty(self):
-        example_rtf = RTF_DIR / "ansicpg1250.rtf"
-        example_txt = TEXT_DIR / "ansicpg1250.txt"
+        example_rtf = RTF_DIR / "issue_11.rtf"
+        example_txt = TEXT_DIR / "issue_11.txt"
 
         with example_rtf.open() as source:
             result = rtf_to_text(source.read())

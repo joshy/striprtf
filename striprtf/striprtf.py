@@ -85,7 +85,9 @@ def rtf_to_text(text):
     ignorable = False  # Whether this group (and all inside it) are "ignorable".
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.
     curskip = 0  # Number of ASCII characters left to skip
-    out = []  # Output buffer.
+    out = b''  # Output buffer.
+    encoding = 'utf8'
+
     for match in PATTERN.finditer(text):
         word, arg, hex, char, brace, tchar = match.groups()
         if brace:
@@ -107,7 +109,7 @@ def rtf_to_text(text):
             curskip = 0
             if char == "~":
                 if not ignorable:
-                    out.append("\xA0")  # NBSP
+                    out = out + b"\xA0"  # NBSP
             elif char in "{}\\":
                 if not ignorable:
                     out.append(char)
@@ -115,18 +117,23 @@ def rtf_to_text(text):
                 ignorable = True
             elif char == "\n":
                 if not ignorable:
-                    out.append("\x0A")  # LF
+                    out = out + b"\x0A"  # LF
             elif char == "\r":
                 if not ignorable:
-                    out.append("\x0D")  # CR
+                    out = out + b"\x0D"  # CR
         elif word:  # \foo
             curskip = 0
             if word in destinations:
                 ignorable = True
+
+            # http://www.biblioscape.com/rtf15_spec.htm#Heading8
+            elif word == "ansicpg":
+                encoding = f"cp{arg}"
+            
             elif ignorable:
                 pass
             elif word in specialchars:
-                out.append(specialchars[word])
+                out = out + specialchars[word].encode(encoding)
             elif word == "uc":
                 ucskip = int(arg)
             elif word == "u":
@@ -137,17 +144,18 @@ def rtf_to_text(text):
                     c = int(arg)
                     if c < 0:
                         c += 0x10000
-                    out.append(chr(c))
+                    out = out + chr(c).encode(encoding)
                     curskip = ucskip
         elif hex:  # \'xx
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
                 c = int(hex, 16)
-                out.append(chr(c))  
+                out = out + bytes.fromhex(hex)
         elif tchar:
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                out.append(tchar)
-    return "".join(out)
+                out = out + tchar.encode(encoding)
+
+    return out.decode(encoding)

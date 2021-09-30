@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.15 - 30.09.2021
+ * Add support for ansicpg encoding (e.g. windows-1250) with #19 \
+   Contributed by [Jan](https://github.com/jan-swiecki)
+
 ## v0.0.14 - 08.09.2021
  * Fixes #18. Small code improvements
 

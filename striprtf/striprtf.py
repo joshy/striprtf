@@ -80,7 +80,7 @@ PATTERN = re.compile(
 )
 
 
-def rtf_to_text(text):
+def rtf_to_text(text, errors='strict'):
     stack = []
     ignorable = False  # Whether this group (and all inside it) are "ignorable".
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.
@@ -133,7 +133,7 @@ def rtf_to_text(text):
             elif ignorable:
                 pass
             elif word in specialchars:
-                out = out + specialchars[word].encode(encoding)
+                out = out + specialchars[word].encode(encoding, errors)
             elif word == "uc":
                 ucskip = int(arg)
             elif word == "u":
@@ -144,7 +144,7 @@ def rtf_to_text(text):
                     c = int(arg)
                     if c < 0:
                         c += 0x10000
-                    out = out + chr(c).encode(encoding)
+                    out = out + chr(c).encode(encoding, errors)
                     curskip = ucskip
         elif hex:  # \'xx
             if curskip > 0:
@@ -156,6 +156,6 @@ def rtf_to_text(text):
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                out = out + tchar.encode(encoding)
+                out = out + tchar.encode(encoding, errors)
 
     return out.decode(encoding)

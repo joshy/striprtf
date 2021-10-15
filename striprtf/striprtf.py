@@ -158,4 +158,4 @@ def rtf_to_text(text, errors='strict'):
             elif not ignorable:
                 out = out + tchar.encode(encoding, errors)
 
-    return out.decode(encoding)
+    return out.decode(encoding, errors)

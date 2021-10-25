@@ -26,6 +26,6 @@ setup(
     keywords=["rtf"],
     scripts=["striprtf/striprtf"],
     classifiers=[
-        "License :: OSI Approved :: BSD License"
+        "License :: OSI Approved :: BSD License",
     ],
 )

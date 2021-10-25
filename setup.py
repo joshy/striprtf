@@ -25,5 +25,7 @@ setup(
     % about["__version__"],
     keywords=["rtf"],
     scripts=["striprtf/striprtf"],
-    classifiers=[],
+    classifiers=[
+        "License :: OSI Approved :: BSD License"
+    ],
 )

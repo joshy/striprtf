@@ -82,7 +82,7 @@ PATTERN = re.compile(
 
 def rtf_to_text(text, errors="strict"):
     """ Converts the rtf text to plain text.
-    
+
     Parameters
     ----------
     text : str
@@ -127,7 +127,10 @@ def rtf_to_text(text, errors="strict"):
                     out = out + b"\xA0"  # NBSP
             elif char in "{}\\":
                 if not ignorable:
-                    out.append(char)
+                    if isinstance(out, bytes):
+                        out = out + char.encode(encoding, errors)
+                    else:
+                        out.append(char)
             elif char == "*":
                 ignorable = True
             elif char == "\n":

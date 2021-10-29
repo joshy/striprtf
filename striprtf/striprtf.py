@@ -80,7 +80,22 @@ PATTERN = re.compile(
 )
 
 
-def rtf_to_text(text, errors='strict'):
+def rtf_to_text(text, errors="strict"):
+    """ Converts the rtf text to plain text.
+    
+    Parameters
+    ----------
+    text : str
+        The rtf text 
+    errors : str
+        How to handle encoding errors. Default is "strict", which throws an error. Another
+        option is "ignore" which, as the name says, ingnores encoding errors.
+    
+    Returns
+    -------
+    str
+        the converted rtf text as plain text
+    """
     stack = []
     ignorable = False  # Whether this group (and all inside it) are "ignorable".
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.

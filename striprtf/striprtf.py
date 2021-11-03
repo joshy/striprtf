@@ -89,7 +89,7 @@ def rtf_to_text(text, errors="strict"):
         The rtf text 
     errors : str
         How to handle encoding errors. Default is "strict", which throws an error. Another
-        option is "ignore" which, as the name says, ingnores encoding errors.
+        option is "ignore" which, as the name says, ignores encoding errors.
     
     Returns
     -------

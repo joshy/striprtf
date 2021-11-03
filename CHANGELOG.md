@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.16 - 03.11.2021
+ * Added a new parameter "errors" which accepts "strict" (default) and "ignore" as options
+   on how to handle encoding errors. 
+
 ## v0.0.15 - 30.09.2021
  * Add support for ansicpg encoding (e.g. windows-1250) with #19 \
    Contributed by [Jan](https://github.com/jan-swiecki)

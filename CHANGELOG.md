@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.17 - 17.12.2021
+ * Fixes [#28](https://github.com/joshy/striprtf/issues/28)
+
 ## v0.0.16 - 03.11.2021
  * Added a new parameter "errors" which accepts "strict" (default) and "ignore" as options
    on how to handle encoding errors. 

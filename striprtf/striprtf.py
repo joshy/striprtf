@@ -86,11 +86,11 @@ def rtf_to_text(text, errors="strict"):
     Parameters
     ----------
     text : str
-        The rtf text 
+        The rtf text
     errors : str
         How to handle encoding errors. Default is "strict", which throws an error. Another
         option is "ignore" which, as the name says, ignores encoding errors.
-    
+
     Returns
     -------
     str
@@ -104,7 +104,7 @@ def rtf_to_text(text, errors="strict"):
     encoding = 'utf8'
 
     for match in PATTERN.finditer(text):
-        word, arg, hex, char, brace, tchar = match.groups()
+        word, arg, _hex, char, brace, tchar = match.groups()
         if brace:
             curskip = 0
             if brace == "{":
@@ -143,11 +143,12 @@ def rtf_to_text(text, errors="strict"):
             curskip = 0
             if word in destinations:
                 ignorable = True
-
             # http://www.biblioscape.com/rtf15_spec.htm#Heading8
             elif word == "ansicpg":
                 encoding = f"cp{arg}"
-            
+            # fix for issue #28
+            elif word == "fcharset" and arg == "134":
+                encoding = "gbk"
             elif ignorable:
                 pass
             elif word in specialchars:
@@ -164,16 +165,15 @@ def rtf_to_text(text, errors="strict"):
                         c += 0x10000
                     out = out + chr(c).encode(encoding, errors)
                     curskip = ucskip
-        elif hex:  # \'xx
+        elif _hex:  # \'xx
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                c = int(hex, 16)
-                out = out + bytes.fromhex(hex)
+                c = int(_hex, 16)
+                out = out + bytes.fromhex(_hex)
         elif tchar:
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
                 out = out + tchar.encode(encoding, errors)
-
     return out.decode(encoding, errors)

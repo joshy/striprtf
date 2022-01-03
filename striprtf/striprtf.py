@@ -1,4 +1,5 @@
 import re
+import codecs
 """
 Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 and modified for better output of tables.
@@ -146,6 +147,11 @@ def rtf_to_text(text, errors="strict"):
             # http://www.biblioscape.com/rtf15_spec.htm#Heading8
             elif word == "ansicpg":
                 encoding = f"cp{arg}"
+                try:
+                    codecs.lookup(encoding)
+                except LookupError:
+                    print(f"Warning: Encoding {encoding} not found, using utf-8")
+                    encoding = "utf8"
             # fix for issue #28
             elif word == "fcharset" and arg == "134":
                 encoding = "gbk"

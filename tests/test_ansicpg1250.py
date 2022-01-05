@@ -8,7 +8,7 @@ TEXT_DIR = Path.cwd() / "tests" / "text"
 
 
 class TestUnicodePolish(unittest.TestCase):
-    def test_empty(self):
+    def test_polish(self):
         example_rtf = RTF_DIR / "ansicpg1250.rtf"
         example_txt = TEXT_DIR / "ansicpg1250.txt"
 

@@ -1,7 +1,10 @@
 # Changelog
 
+## v0.0.20 - 23.02.22
+ * Fixes [#31](https://github.com/joshy/striprtf/issues/31)
+
 ## v0.0.19 - 05.01.2022
- * Fixes [#29](https://github.com/joshy/striprtf/issues/20)
+ * Fixes [#29](https://github.com/joshy/striprtf/issues/29)
 
 ## v0.0.18 - 03.01.2022
  * Fixes [#20](https://github.com/joshy/striprtf/issues/20)

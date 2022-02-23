@@ -147,11 +147,10 @@ def rtf_to_text(text, errors="strict"):
             # http://www.biblioscape.com/rtf15_spec.htm#Heading8
             elif word == "ansicpg":
                 encoding = f"cp{arg}"
-                print(f"Got encoding {encoding}")
                 try:
                     codecs.lookup(encoding)
                 except LookupError:
-                    print(f"Warning: Encoding {encoding} not found, using utf-8")
+                    #print(f"Warning: Encoding {encoding} not found, using utf-8")
                     encoding = "utf8"
             if ignorable:
                 pass

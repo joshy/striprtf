@@ -1,5 +1,38 @@
 # Changelog
 
+## v0.0.20 - 23.02.22
+ * Fixes [#31](https://github.com/joshy/striprtf/issues/31)
+
+## v0.0.19 - 05.01.2022
+ * Fixes [#29](https://github.com/joshy/striprtf/issues/29)
+
+## v0.0.18 - 03.01.2022
+ * Fixes [#20](https://github.com/joshy/striprtf/issues/20)
+
+## v0.0.17 - 17.12.2021
+ * Fixes [#28](https://github.com/joshy/striprtf/issues/28)
+
+## v0.0.16 - 03.11.2021
+ * Added a new parameter "errors" which accepts "strict" (default) and "ignore" as options
+   on how to handle encoding errors. 
+
+## v0.0.15 - 30.09.2021
+ * Add support for ansicpg encoding (e.g. windows-1250) with #19 \
+   Contributed by [Jan](https://github.com/jan-swiecki)
+
+## v0.0.14 - 08.09.2021
+ * Fixes #18. Small code improvements
+
+## v0.0.13 - 19.05.2021
+ * Fixes #17. Restore python2 compatibility. 
+   This will be the last version to support that!
+
+## v0.0.12 - 02.12.2020
+ * migrate to github actions
+
+## v0.0.11 - 27.08.2020
+ * Fixed ldblquote (spotted by Ziyang(Claude) Hu)
+
 ## v0.0.10 - 16.03.2020
  * Wrong upload to pypi
 

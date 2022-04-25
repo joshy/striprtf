@@ -1,5 +1,5 @@
 import re
-
+import codecs
 """
 Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 and modified for better output of tables.
@@ -68,7 +68,7 @@ specialchars = {
     "bullet": "\u2022",
     "lquote": "\u2018",
     "rquote": "\u2019",
-    "ldblquote": "\201C",
+    "ldblquote": "\u201C",
     "rdblquote": "\u201D",
     "row": "\n",
     "cell": "|",
@@ -101,17 +101,34 @@ def _replace_hyperlinks(text):
         return f"{g1}({link_destination})"
 
     return re.sub(HYPERLINKS, _is_hyperlink, text)
-    
 
-def rtf_to_text(text):
+    
+def rtf_to_text(text, errors="strict"):
+    """ Converts the rtf text to plain text.
+
+    Parameters
+    ----------
+    text : str
+        The rtf text
+    errors : str
+        How to handle encoding errors. Default is "strict", which throws an error. Another
+        option is "ignore" which, as the name says, ignores encoding errors.
+
+    Returns
+    -------
+    str
+        the converted rtf text as plain text
+    """
     text = _replace_hyperlinks(text)
     stack = []
     ignorable = False  # Whether this group (and all inside it) are "ignorable".
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.
     curskip = 0  # Number of ASCII characters left to skip
-    out = []  # Output buffer.
+    out = b''  # Output buffer.
+    encoding = 'utf8'
+
     for match in PATTERN.finditer(text):
-        word, arg, hex, char, brace, tchar = match.groups()
+        word, arg, _hex, char, brace, tchar = match.groups()
         if brace:
             curskip = 0
             if brace == "{":
@@ -119,38 +136,49 @@ def rtf_to_text(text):
                 stack.append((ucskip, ignorable))
             elif brace == "}":
                 # Pop state
-                try:
+                if stack:
                     ucskip, ignorable = stack.pop()
                 # sample_3.rtf throws an IndexError because of stack being empty.
                 # don't know right now how this could happen, so for now this is
                 # a ugly hack to prevent it
-                except IndexError:
+                else:
                     ucskip = 0
                     ignorable = True
         elif char:  # \x (not a letter)
             curskip = 0
             if char == "~":
                 if not ignorable:
-                    out.append("\xA0")  # NBSP
+                    out = out + b"\xA0"  # NBSP
             elif char in "{}\\":
                 if not ignorable:
-                    out.append(char)
+                    if isinstance(out, bytes):
+                        out = out + char.encode(encoding, errors)
+                    else:
+                        out.append(char)
             elif char == "*":
                 ignorable = True
             elif char == "\n":
                 if not ignorable:
-                    out.append("\x0A")  # LF
+                    out = out + b"\x0A"  # LF
             elif char == "\r":
                 if not ignorable:
-                    out.append("\x0D")  # CR
+                    out = out + b"\x0D"  # CR
         elif word:  # \foo
             curskip = 0
             if word in destinations:
                 ignorable = True
-            elif ignorable:
+            # http://www.biblioscape.com/rtf15_spec.htm#Heading8
+            elif word == "ansicpg":
+                encoding = f"cp{arg}"
+                try:
+                    codecs.lookup(encoding)
+                except LookupError:
+                    #print(f"Warning: Encoding {encoding} not found, using utf-8")
+                    encoding = "utf8"
+            if ignorable:
                 pass
             elif word in specialchars:
-                out.append(specialchars[word])
+                out = out + specialchars[word].encode(encoding, errors)
             elif word == "uc":
                 ucskip = int(arg)
             elif word == "u":
@@ -161,23 +189,17 @@ def rtf_to_text(text):
                     c = int(arg)
                     if c < 0:
                         c += 0x10000
-                    if c > 127:
-                        out.append(chr(c))  # NOQA
-                    else:
-                        out.append(chr(c))
+                    out = out + chr(c).encode(encoding, errors)
                     curskip = ucskip
-        elif hex:  # \'xx
+        elif _hex:  # \'xx
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                c = int(hex, 16)
-                if c > 127:
-                    out.append(chr(c))  # NOQA
-                else:
-                    out.append(chr(c))
+                c = int(_hex, 16)
+                out = out + bytes.fromhex(_hex)
         elif tchar:
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                out.append(tchar)
-    return "".join(out)
+                out = out + tchar.encode(encoding, errors)
+    return out.decode(encoding, errors)

@@ -1,5 +1,5 @@
 # striprtf
-[![Build Status](https://api.travis-ci.org/joshy/striprtf.svg?branch=master)](https://travis-ci.org/joshy/striprtf)
+![Build status](https://github.com/joshy/striprtf/workflows/striprtf%20build/badge.svg)
 
 ## Purpose
 This is a simple library to convert rtf files to python strings. A lot of
@@ -26,8 +26,12 @@ https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 Very few additions where made, e.g. better formatting of tables.
 
 ## Pushing to PyPi
+ * pip install twine
+
+
 Run commands
 ```
 python setup.py sdist bdist_wheel
-python setup.py sdist upload -r pypi
+twine upload -r testpypi dist/*
+twine upload -r pypi dist/*
 ```

@@ -1,6 +1,5 @@
 import unittest
 from pathlib import Path
-from filecmp import cmp
 
 from striprtf.striprtf import rtf_to_text
 
@@ -15,8 +14,6 @@ class TestSpeiseplan(unittest.TestCase):
 
         with example_rtf.open() as source:
             result = rtf_to_text(source.read())
-            with (open("foo.text", "w")) as f:
-                f.write(result)
         with example_txt.open() as destination:
             self.maxDiff = None
             self.assertEqual(destination.read(), result)

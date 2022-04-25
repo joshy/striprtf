@@ -1,11 +1,10 @@
 import io
-# read the contents of your README file
 from os import path
 
 from setuptools import setup
 
 this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
+with io.open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 about = {}
@@ -20,11 +19,14 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Joshy Cyriac",
-    author_email="j.cyriac@gmail.com",
+    author_email="joshy@posteo.ch",
     url="https://github.com/joshy/striprtf",
-    download_url="https://github.com/joshy/striprtf/archive/v%s.tar.gz" % about['__version__'],
+    download_url="https://github.com/joshy/striprtf/archive/v%s.tar.gz"
+    % about["__version__"],
     keywords=["rtf"],
     scripts=["striprtf/striprtf"],
-    classifiers=[],
-    python_requires='>3.6',
+    license="BSD-3-Clause",
+    classifiers=[
+        "License :: OSI Approved :: BSD License",
+    ],
 )

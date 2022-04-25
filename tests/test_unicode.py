@@ -7,12 +7,12 @@ RTF_DIR = Path.cwd() / "tests" / "rtf"
 TEXT_DIR = Path.cwd() / "tests" / "text"
 
 
-class TestHello(unittest.TestCase):
+class TestUnicode(unittest.TestCase):
     def test_empty(self):
-        example_rtf = RTF_DIR / "hello.rtf"
-        example_txt = TEXT_DIR / "hello.txt"
+        example_rtf = RTF_DIR / "unicode.rtf"
+        example_txt = TEXT_DIR / "unicode.txt"
 
-        with example_rtf.open() as source:
+        with example_rtf.open(encoding="utf-8") as source:
             result = rtf_to_text(source.read())
-        with example_txt.open() as destination:
+        with example_txt.open(encoding="utf-8") as destination:
             self.assertEqual(destination.read(), result)

@@ -13,6 +13,14 @@ rtf = "some rtf encoded string"
 text = rtf_to_text(rtf)
 print(text)
 ```
+Sometimes UnicodeDecodingErrors can happen because of various reasons.
+In this case you can try to relax the encoding process like this:
+```python
+from striprtf.striprtf import rtf_to_text
+rtf = "some rtf encoded string"
+text = rtf_to_text(rtf, errors="ignore")
+print(text)
+```
 
 ## How to use online
 If you don't want to install, there is also an online version available at https://striprtf.dev

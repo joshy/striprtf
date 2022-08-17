@@ -15,7 +15,7 @@ destinations = frozenset((
     'colortbl','comment','company','creatim','datafield','datastore','defchp','defpap',
     'do','doccomm','docvar','dptxbxtext','ebcend','ebcstart','factoidname','falt',
     'fchars','ffdeftext','ffentrymcr','ffexitmcr','ffformat','ffhelptext','ffl',
-    'ffname','ffstattext','field','file','filetbl','fldinst','fldrslt','fldtype',
+    'ffname','ffstattext','file','filetbl','fldinst','fldtype',
     'fname','fontemb','fontfile','fonttbl','footer','footerf','footerl','footerr',
     'footnote','formfield','ftncn','ftnsep','ftnsepc','g','generator','gridtbl',
     'header','headerf','headerl','headerr','hl','hlfr','hlinkbase','hlloc','hlsrc',

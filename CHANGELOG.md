@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.21 - 17.08.22
+ * Fixes [#32](https://github.com/joshy/striprtf/issues/32)  
+  Thanks to [akBeater](https://github.com/akBeater), [amirali1690](https://github.com/amirali1690)
+
+
 ## v0.0.20 - 23.02.22
  * Fixes [#31](https://github.com/joshy/striprtf/issues/31)
 

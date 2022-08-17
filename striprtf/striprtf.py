@@ -85,9 +85,7 @@ HYPERLINKS = re.compile(
     re.IGNORECASE
 )
 
-
-def _replace_hyperlinks(text):
-    def _is_hyperlink(match):
+def _is_hyperlink(match):
         groups = match.groups()
         link_text = groups[-1]
         link_destination = groups[-2]
@@ -100,6 +98,8 @@ def _replace_hyperlinks(text):
             g1 = link_text
         return f"{g1}({link_destination})"
 
+
+def _replace_hyperlinks(text):
     return re.sub(HYPERLINKS, _is_hyperlink, text)
 
     

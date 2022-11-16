@@ -103,7 +103,7 @@ def _replace_hyperlinks(text):
     return re.sub(HYPERLINKS, _is_hyperlink, text)
 
     
-def rtf_to_text(text, errors="strict"):
+def rtf_to_text(text, errors="strict", encoding="utf-8"):
     """ Converts the rtf text to plain text.
 
     Parameters
@@ -125,7 +125,6 @@ def rtf_to_text(text, errors="strict"):
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.
     curskip = 0  # Number of ASCII characters left to skip
     out = b''  # Output buffer.
-    encoding = 'utf8'
 
     for match in PATTERN.finditer(text):
         word, arg, _hex, char, brace, tchar = match.groups()

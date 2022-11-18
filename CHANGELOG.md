@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.22 - 18.11.22
+  * Added parameter `encoding` to rtf_to_text which is set to `utf-8` as a default. Thanks to [jnth](https://github.com/jnth)
+
 ## v0.0.21 - 17.08.22
  * Fixes [#32](https://github.com/joshy/striprtf/issues/32)  
   Thanks to [akBeater](https://github.com/akBeater), [amirali1690](https://github.com/amirali1690)

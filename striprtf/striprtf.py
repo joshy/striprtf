@@ -103,13 +103,15 @@ def _replace_hyperlinks(text):
     return re.sub(HYPERLINKS, _is_hyperlink, text)
 
     
-def rtf_to_text(text, errors="strict", encoding="utf-8"):
+def rtf_to_text(text, encoding="utf-8", errors="strict"):
     """ Converts the rtf text to plain text.
 
     Parameters
     ----------
     text : str
         The rtf text
+    encoding : str
+        Output encoding, default is "utf-8"
     errors : str
         How to handle encoding errors. Default is "strict", which throws an error. Another
         option is "ignore" which, as the name says, ignores encoding errors.

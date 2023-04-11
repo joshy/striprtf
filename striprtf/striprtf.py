@@ -103,7 +103,7 @@ def _replace_hyperlinks(text):
     return re.sub(HYPERLINKS, _is_hyperlink, text)
 
     
-def rtf_to_text(text, encoding="utf-8", errors="strict"):
+def rtf_to_text(text, encoding="utf-8", errors="strict", detect_encoding=True):
     """ Converts the rtf text to plain text.
 
     Parameters
@@ -169,7 +169,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
             if word in destinations:
                 ignorable = True
             # http://www.biblioscape.com/rtf15_spec.htm#Heading8
-            elif word == "ansicpg":
+            elif word == "ansicpg" and detect_encoding:
                 encoding = f"cp{arg}"
                 try:
                     codecs.lookup(encoding)

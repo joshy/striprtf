@@ -126,7 +126,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
     ignorable = False  # Whether this group (and all inside it) are "ignorable".
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.
     curskip = 0  # Number of ASCII characters left to skip
-    utf8String = ''
+    out = ''
 
     for match in PATTERN.finditer(text):
         word, arg, _hex, char, brace, tchar = match.groups()
@@ -149,18 +149,18 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
             curskip = 0
             if char == "~":
                 if not ignorable:
-                    utf8String += " "
+                    out += " "
             elif char in "{}\\":
                 if not ignorable:
-                    utf8String += char
+                    out += char
             elif char == "*":
                 ignorable = True
             elif char == "\n":
                 if not ignorable:
-                    utf8String += b"\x0A".decode('utf8')
+                    out += b"\x0A".decode('utf8')
             elif char == "\r":
                 if not ignorable:
-                    utf8String += b"\x0D".decode('utf8')
+                    out += b"\x0D".decode('utf8')
         elif word:  # \foo
             curskip = 0
             if word in destinations:
@@ -176,7 +176,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
             if ignorable:
                 pass
             elif word in specialchars:
-                utf8String += specialchars[word].encode(encoding, errors).decode('utf8')
+                out += specialchars[word].encode(encoding, errors).decode('utf8')
             elif word == "uc":
                 ucskip = int(arg)
             elif word == "u":
@@ -191,18 +191,18 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
                       chr1 = chr(c).encode(encoding, errors)
                     except UnicodeEncodeError as e:
                         chr1 = chr(c).encode('utf8')
-                    utf8String += chr1.decode('utf8')
+                    out += chr1.decode('utf8')
                     curskip = ucskip
         elif _hex:  # \'xx
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
                 c = int(_hex, 16)
-                utf8String += bytes.fromhex(_hex).decode(encoding=encoding).encode('utf8').decode()
+                out += bytes.fromhex(_hex).decode(encoding=encoding).encode('utf8').decode()
         elif tchar:
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                utf8String += tchar.encode('utf8').decode()
+                out += tchar.encode('utf8').decode()
 
-    return utf8String 
+    return out 

@@ -126,7 +126,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
     ignorable = False  # Whether this group (and all inside it) are "ignorable".
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.
     curskip = 0  # Number of ASCII characters left to skip
-    out = b''  # Output buffer.
+    utf8String = ''
 
     for match in PATTERN.finditer(text):
         word, arg, _hex, char, brace, tchar = match.groups()
@@ -149,21 +149,18 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
             curskip = 0
             if char == "~":
                 if not ignorable:
-                    out = out + b"\xA0"  # NBSP
+                    utf8String += " "
             elif char in "{}\\":
                 if not ignorable:
-                    if isinstance(out, bytes):
-                        out = out + char.encode(encoding, errors)
-                    else:
-                        out.append(char)
+                    utf8String += char
             elif char == "*":
                 ignorable = True
             elif char == "\n":
                 if not ignorable:
-                    out = out + b"\x0A"  # LF
+                    utf8String += b"\x0A".decode('utf8')
             elif char == "\r":
                 if not ignorable:
-                    out = out + b"\x0D"  # CR
+                    utf8String += b"\x0D".decode('utf8')
         elif word:  # \foo
             curskip = 0
             if word in destinations:
@@ -179,7 +176,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
             if ignorable:
                 pass
             elif word in specialchars:
-                out = out + specialchars[word].encode(encoding, errors)
+                utf8String += specialchars[word].encode(encoding, errors).decode('utf8')
             elif word == "uc":
                 ucskip = int(arg)
             elif word == "u":
@@ -190,17 +187,22 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
                     c = int(arg)
                     if c < 0:
                         c += 0x10000
-                    out = out + chr(c).encode(encoding, errors)
+                    try:
+                      chr1 = chr(c).encode(encoding, errors)
+                    except UnicodeEncodeError as e:
+                        chr1 = chr(c).encode('utf8')
+                    utf8String += chr1.decode('utf8')
                     curskip = ucskip
         elif _hex:  # \'xx
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
                 c = int(_hex, 16)
-                out = out + bytes.fromhex(_hex)
+                utf8String += bytes.fromhex(_hex).decode(encoding=encoding).encode('utf8').decode()
         elif tchar:
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                out = out + tchar.encode(encoding, errors)
-    return out.decode(encoding, errors)
+                utf8String += tchar.encode('utf8').decode()
+
+    return utf8String 

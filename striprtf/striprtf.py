@@ -111,7 +111,8 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
     text : str
         The rtf text
     encoding : str
-        Input encoding this is ignored if the RTF file contains an explicit codepage directive, as is typically the case.
+        Input encoding this is ignored if the rtf file contains an explicit codepage directive, 
+        as it is typically the case.
     errors : str
         How to handle encoding errors. Default is "strict", which throws an error. Another
         option is "ignore" which, as the name says, ignores encoding errors.
@@ -119,7 +120,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
     Returns
     -------
     str
-        the converted rtf text as a Python Unicode string
+        the converted rtf text as a python unicode string
     """
     text = _replace_hyperlinks(text)
     stack = []

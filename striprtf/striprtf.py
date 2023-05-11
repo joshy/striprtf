@@ -191,11 +191,11 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
                     if c < 0:
                         c += 0x10000
                     try:
-                        chr1 = chr(c).encode(encoding, errors).decode(encoding).encode('utf-8', errors)
+                        chr1 = chr(c).encode(encoding, errors).decode(encoding)
                     # because some flavors of rtf seem to allow utf8 inside of cp1252
                     except UnicodeEncodeError as e:
-                        chr1 = chr(c).encode('utf-8', errors)
-                    out += chr1.decode('utf-8')
+                        chr1 = chr(c)
+                    out += chr1.encode('utf-8', errors).decode('utf-8')
                     curskip = ucskip
         elif _hex:  # \'xx
             if curskip > 0:
@@ -210,5 +210,5 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                out += tchar.encode('utf-8', errors).decode()
+                out += tchar
     return out

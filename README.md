@@ -14,7 +14,8 @@ text = rtf_to_text(rtf)
 print(text)
 ```
 
-If you want to use a different encoding than `utf-8` to can pass the parameter `encoding`.
+If you want to use a different encoding than `cp1252` you can pass it via the parameter `encoding`. This 
+is only taken into account if no explicit codepage has been set. 
 ```python
 from striprtf.striprtf import rtf_to_text
 rtf = "some rtf encoded string in latin1"
@@ -40,7 +41,9 @@ If you don't want to install, there is also an online version available at https
 had. The next best thing was this gist:
 https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 
-Very few additions where made, e.g. better formatting of tables.
+~~Very few additions where made, e.g. better formatting of tables. ~~
+
+In the meantime some encodings bugs have been fixed. :-)
 
 ## Pushing to PyPi
  * pip install twine

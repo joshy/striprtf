@@ -103,7 +103,7 @@ def _replace_hyperlinks(text):
     return re.sub(HYPERLINKS, _is_hyperlink, text)
 
     
-def rtf_to_text(text, encoding="utf-8", errors="strict"):
+def rtf_to_text(text, encoding="cp1252", errors="strict"):
     """ Converts the rtf text to plain text.
 
     Parameters
@@ -111,8 +111,8 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
     text : str
         The rtf text
     encoding : str
-        Input encoding this is ignored if the rtf file contains an explicit codepage directive, 
-        as it is typically the case.
+        Input encoding which is ignored if the rtf file contains an explicit codepage directive, 
+        as it is typically the case. Defaults to `cp1252` encoding as it the most commonly used.
     errors : str
         How to handle encoding errors. Default is "strict", which throws an error. Another
         option is "ignore" which, as the name says, ignores encoding errors.

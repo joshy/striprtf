@@ -119,17 +119,21 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
     Returns
     -------
     str
-        the converted rtf text as plain text
+        the converted rtf text as a utf-8 string
     """
     text = _replace_hyperlinks(text)
     stack = []
     ignorable = False  # Whether this group (and all inside it) are "ignorable".
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.
     curskip = 0  # Number of ASCII characters left to skip
+    hexes = None
     out = ''
 
     for match in PATTERN.finditer(text):
         word, arg, _hex, char, brace, tchar = match.groups()
+        if hexes and not _hex:
+            out += bytes.fromhex(hexes).decode(encoding=encoding).encode('utf8').decode()
+            hexes = None
         if brace:
             curskip = 0
             if brace == "{":
@@ -157,10 +161,10 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
                 ignorable = True
             elif char == "\n":
                 if not ignorable:
-                    out += b"\x0A".decode('utf8')
+                    out += b"\x0A".decode('utf-8')
             elif char == "\r":
                 if not ignorable:
-                    out += b"\x0D".decode('utf8')
+                    out += b"\x0D".decode('utf-8')
         elif word:  # \foo
             curskip = 0
             if word in destinations:
@@ -171,12 +175,11 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
                 try:
                     codecs.lookup(encoding)
                 except LookupError:
-                    #print(f"Warning: Encoding {encoding} not found, using utf-8")
                     encoding = "utf8"
             if ignorable:
                 pass
             elif word in specialchars:
-                out += specialchars[word].encode(encoding, errors).decode('utf8')
+                out += specialchars[word]
             elif word == "uc":
                 ucskip = int(arg)
             elif word == "u":
@@ -188,21 +191,24 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
                     if c < 0:
                         c += 0x10000
                     try:
-                      chr1 = chr(c).encode(encoding, errors)
+                        chr1 = chr(c).encode(encoding, errors).decode(encoding).encode('utf-8', errors)
+                    # because some flavors of rtf seem to allow utf8 inside of cp1252
                     except UnicodeEncodeError as e:
-                        chr1 = chr(c).encode('utf8')
-                    out += chr1.decode('utf8')
+                        chr1 = chr(c).encode('utf-8', errors)
+                    out += chr1.decode('utf-8')
                     curskip = ucskip
         elif _hex:  # \'xx
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
                 c = int(_hex, 16)
-                out += bytes.fromhex(_hex).decode(encoding=encoding).encode('utf8').decode()
+                if not hexes:
+                    hexes = _hex
+                else:
+                    hexes += _hex
         elif tchar:
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                out += tchar.encode('utf8').decode()
-
-    return out 
+                out += tchar.encode('utf-8').decode()
+    return out

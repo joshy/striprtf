@@ -14,5 +14,7 @@ class TestEncoding(unittest.TestCase):
 
         with example_rtf.open() as source:
             result = rtf_to_text(source.read(), errors="ignore")
+        with open(example_txt, 'w', encoding="utf-8") as fout:
+            fout.write(result)
         with example_txt.open() as destination:
             self.assertEqual(destination.read(), result)

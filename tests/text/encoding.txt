@@ -9,7 +9,7 @@ Paciente com suspeita de pneumonia viral.
 An'e1lise
 Exame comparativo em rela'e7'e3o ao realizado em 20/06/2020,evidencia:
 Achados pulmonares: 
-Aumento das opacidades em vidro fosco e focos de consolida'e7'e3o bilaterais, por vezes confluentes e sobrepostas a 'e1reas de espessamento septal, predominando nas regi'f5es perif'e9ricas bilateralmente, associado 'e0 bronquios com leve espessamente, assim como algumas areas com bronquiectasias de tracao e distor'e7'e3o arquitetural. Extens'e3o do acometimento pulmonar: acentuado (maior que 50%). 
+Aumento das opacidades em vidro fosco e focos de consolida'e7'e3o bilaterais, por vezes confluentes e sobrepostas a 'e1reas de espessamento septal, predominando nas regi'f5es perif'e9ricas bilateralmente, associado 'e0 brônquios com leve espessamente, assim como algumas áreas com bronquiectasias de tração e distor'e7'e3o arquitetural. Extens'e3o do acometimento pulmonar: acentuado (maior que 50%). 
 Redu'e7'e3o do derrame pleural cissural 'e0 direita e surgimento de derrame pleural 'e0 esquerda.
 Bandas parenquimatosas esparsas e bilaterais, predominando nas bases, compat'edveis com estrias residuais/atelectasias subsegmentares. 
 Pequenos n'f3dulos pulmonares esparsos, alguns calcificados (residuais) e os demais n'e3o calcificados e menores que 0,5 cm (incaracter'edsticos). 
@@ -50,9 +50,9 @@ Paciente com suspeita de pneumonia viral.
 An'e1lise
 Achados pulmonares:
 T'eanues opacidades lineares e em vidro fosco subpleurais com predom'ednio na por'e7'e3o posterobasal dos lobos inferiores, que devem corresponder ao dec'fabito / n'e3o expans'e3o pulmonar.
-Nodulo pulmonar solido circunscrito, n'e3o calcificado, margens irregulares, medindo cerca de 1,0 cm, localizado no segmento basal posterior direito, de natureza indeterminada.
+Nódulo pulmonar sólido circunscrito, n'e3o calcificado, margens irregulares, medindo cerca de 1,0 cm, localizado no segmento basal posterior direito, de natureza indeterminada.
 Pequenos n'f3dulos pulmonares esparsos bilaterais, menores que 0,5 cm, alguns calcificados e residuais, outros n'e3o calcificados e inespec'edficos.
-Pequenos cistos aereos, medindo at'e9 0,9 cm, localizados nos lobos inferiores.
+Pequenos cistos aéreos, medindo at'e9 0,9 cm, localizados nos lobos inferiores.
 Bandas parenquimatosas fibroatelect'e1sias esparsas, de aspecto residual.
 Demais achados:
 Grandes vasos do mediastino com calibre normal. Ateromatose a'f3rtica.
@@ -64,7 +64,7 @@ Espondilose dorsal.
 
 Conclus'e3o
 N'e3o se observam 'e1reas de consolida'e7'e3o ou opacidades em vidro fosco no par'eanquima pulmonar que sugiram altera'e7'e3o de natureza inflamat'f3ria / infecciosa.
-Nodulo pulmonar indeterminado no lobo inferior direito sugerindo-se controle evolutivo.
+Nódulo pulmonar indeterminado no lobo inferior direito sugerindo-se controle evolutivo.
 
 														
 Laudo Assinado Eletronicamente

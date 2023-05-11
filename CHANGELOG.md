@@ -3,7 +3,7 @@
 
 ## v0.0.24 - 11.05.23
   * Clarified the meaning of the `encoding` parameter. It is used as the encoding if an explicit encoding is missing in the rtf file. As the majority of rtf files is encoded in ANSI, this is now the default. 
-  [#41](https://github.com/joshy/striprtf/issues/41).
+  Fixes [#41](https://github.com/joshy/striprtf/issues/41).
     Thanks to [plessbd](https://github.com/plessbd) and [stevengj](https://github.com/stevengj)
 
 ## v0.0.23 - 11.05.23

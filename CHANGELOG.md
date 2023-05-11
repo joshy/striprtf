@@ -1,5 +1,11 @@
 # Changelog
 
+
+## v0.0.24 - 11.05.23
+  * Clarified the meaning of the `encoding` parameter. It is used as the encoding if an explicit encoding is missing in the rtf file. As the majority of rtf files is encoded in ANSI, this is now the default. 
+  [#41](https://github.com/joshy/striprtf/issues/41).
+    Thanks to [plessbd](https://github.com/plessbd) and [stevengj](https://github.com/stevengj)
+
 ## v0.0.23 - 11.05.23
   * Parameter `encoding` is now always encoded to `utf-8` output. This release fixes some of the troubles with encodings. 
     Thanks to [plessbd](https://github.com/plessbd), [stevengj](https://github.com/stevengj) and [nikita-petrashen](https://github.com/nikita-petrashen)

@@ -119,7 +119,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
     Returns
     -------
     str
-        the converted rtf text as a utf-8 string
+        the converted rtf text as a Python Unicode string
     """
     text = _replace_hyperlinks(text)
     stack = []

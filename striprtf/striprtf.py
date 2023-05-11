@@ -111,8 +111,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
     text : str
         The rtf text
     encoding : str
-        Output encoding is fixed to "utf-8". It remains
-        in the signature to not break existing installations.
+        Output encoding, default is "utf-8"
     errors : str
         How to handle encoding errors. Default is "strict", which throws an error. Another
         option is "ignore" which, as the name says, ignores encoding errors.
@@ -133,7 +132,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
     for match in PATTERN.finditer(text):
         word, arg, _hex, char, brace, tchar = match.groups()
         if hexes and not _hex:
-            out += bytes.fromhex(hexes).decode(encoding=encoding).encode('utf8').decode()
+            out += bytes.fromhex(hexes).decode(encoding=encoding)
             hexes = None
         if brace:
             curskip = 0
@@ -154,7 +153,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
             curskip = 0
             if char == "~":
                 if not ignorable:
-                    out += b"\xA0".decode('utf-8')
+                    out += chr(0xa0)
             elif char in "{}\\":
                 if not ignorable:
                     out += char
@@ -162,10 +161,10 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
                 ignorable = True
             elif char == "\n":
                 if not ignorable:
-                    out += b"\x0A".decode('utf-8')
+                    out += char
             elif char == "\r":
                 if not ignorable:
-                    out += b"\x0D".decode('utf-8')
+                    out += char
         elif word:  # \foo
             curskip = 0
             if word in destinations:
@@ -211,5 +210,5 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                out += tchar.encode('utf-8').decode()
+                out += tchar.encode('utf-8', errors).decode()
     return out

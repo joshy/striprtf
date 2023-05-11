@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.23 - 11.05.23
+  * Parameter `encoding` is now always encoded to `utf-8` output. This release fixes some of the troubles with encodings. 
+    Thanks to [plessbd](https://github.com/plessbd), [stevengj](https://github.com/stevengj) and [nikita-petrashen](https://github.com/nikita-petrashen)
+
 ## v0.0.22 - 18.11.22
   * Added parameter `encoding` to rtf_to_text which is set to `utf-8` as a default. Thanks to [jnth](https://github.com/jnth)
 

@@ -111,7 +111,8 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
     text : str
         The rtf text
     encoding : str
-        Output encoding, default is "utf-8"
+        Output encoding is fixed to "utf-8". It remains
+        in the signature to not break existing installations.
     errors : str
         How to handle encoding errors. Default is "strict", which throws an error. Another
         option is "ignore" which, as the name says, ignores encoding errors.

@@ -7,7 +7,6 @@ RTF_DIR = Path.cwd() / "tests" / "rtf"
 TEXT_DIR = Path.cwd() / "tests" / "text"
 
 
-
 class Encoding(unittest.TestCase):
     def test_encoding(self):
         example_rtf = RTF_DIR / "issue_37.rtf"
@@ -17,4 +16,3 @@ class Encoding(unittest.TestCase):
             result = rtf_to_text(source.read())
         with example_txt.open() as destination:
             self.assertEqual(destination.read(), result)
-

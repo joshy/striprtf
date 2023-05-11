@@ -153,7 +153,7 @@ def rtf_to_text(text, encoding="utf-8", errors="strict"):
             curskip = 0
             if char == "~":
                 if not ignorable:
-                    out += " "
+                    out += b"\xA0".decode('utf-8')
             elif char in "{}\\":
                 if not ignorable:
                     out += char

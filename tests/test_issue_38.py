@@ -37,4 +37,3 @@ class Table(unittest.TestCase):
     def test_table_string(self):
         result = rtf_to_text(RTF_TABLE)
         self.assertEqual(TEXT_TABLE, result)
-          

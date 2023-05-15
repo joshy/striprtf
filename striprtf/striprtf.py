@@ -73,6 +73,15 @@ specialchars = {
     "row": "\n",
     "cell": "|",
     "nestcell": "|",
+    "~": "\xa0",
+    "\n":"\n",
+    "\r": "\r",
+    "{": "{",
+    "}": "}",
+    "\\": "\\",
+    "-": "\xad",
+    "_": "\u2011"
+
 }
 
 PATTERN = re.compile(
@@ -152,20 +161,11 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
                     ignorable = True
         elif char:  # \x (not a letter)
             curskip = 0
-            if char == "~":
+            if char in specialchars:
                 if not ignorable:
-                    out += chr(0xa0)
-            elif char in "{}\\":
-                if not ignorable:
-                    out += char
+                   out += specialchars[char]
             elif char == "*":
                 ignorable = True
-            elif char == "\n":
-                if not ignorable:
-                    out += char
-            elif char == "\r":
-                if not ignorable:
-                    out += char
         elif word:  # \foo
             curskip = 0
             if word in destinations:

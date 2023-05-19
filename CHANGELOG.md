@@ -1,5 +1,7 @@
 # Changelog
 
+## v0.0.25 - 19.05.23
+  * Parameter "errors" was not used anymore. Is now fixed and a test case was added. Thanks [powo](https://github.com/powo) for reporting.
 
 ## v0.0.24 - 11.05.23
   * Clarified the meaning of the `encoding` parameter. It is used as the encoding if an explicit encoding is missing in the rtf file. As the majority of rtf files is encoded in ANSI, this is now the default. 

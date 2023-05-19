@@ -142,7 +142,7 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     for match in PATTERN.finditer(text):
         word, arg, _hex, char, brace, tchar = match.groups()
         if hexes and not _hex:
-            out += bytes.fromhex(hexes).decode(encoding=encoding)
+            out += bytes.fromhex(hexes).decode(encoding=encoding, errors=errors)
             hexes = None
         if brace:
             curskip = 0

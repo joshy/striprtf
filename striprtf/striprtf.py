@@ -90,7 +90,7 @@ PATTERN = re.compile(
 )
 
 HYPERLINKS = re.compile(
-    r"(\{\\field\{\n?\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}{2}\s?\{.*\s+(.*)\}{2})",
+    r"(\{\\field\{\n?\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}{2}\s?\{.*\s+([^\n].*)\}{2})",
     re.IGNORECASE
 )
 

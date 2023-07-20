@@ -90,7 +90,7 @@ PATTERN = re.compile(
 )
 
 HYPERLINKS = re.compile(
-    r"(\{\\field\{\n?\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}{2}\s?\{.*\s+(.*)\}{2})",
+    r"(\{\\field\{\n?\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}{2}\s?\{.*\s+([^\n].*)\}{2})",
     re.IGNORECASE
 )
 
@@ -101,7 +101,7 @@ def _is_hyperlink(match):
         # why this ugly hack? the hyperlink regex can't cope with the regex ending with
         # either }}} or }}. So we are capturing two and if there is another
         # one we remove it here
-        if link_text[-1] == "}":
+        if (link_text.strip()) and (link_text[-1] == "}"):
             g1 = link_text[:-1]
         else:
             g1 = link_text

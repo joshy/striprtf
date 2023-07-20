@@ -90,26 +90,9 @@ PATTERN = re.compile(
 )
 
 HYPERLINKS = re.compile(
-    r"(\{\\field\{\n?\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}{2}\s?\{.*\s+([^\n].*)\}{2})",
+    r"(\{\\field\{\s*\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}{2}\s*\{.*?\s+(.*?)\}{2,3})",
     re.IGNORECASE
 )
-
-def _is_hyperlink(match):
-        groups = match.groups()
-        link_text = groups[-1]
-        link_destination = groups[-2]
-        # why this ugly hack? the hyperlink regex can't cope with the regex ending with
-        # either }}} or }}. So we are capturing two and if there is another
-        # one we remove it here
-        if (link_text.strip()) and (link_text[-1] == "}"):
-            g1 = link_text[:-1]
-        else:
-            g1 = link_text
-        return f"{g1}({link_destination})"
-
-
-def _replace_hyperlinks(text):
-    return re.sub(HYPERLINKS, _is_hyperlink, text)
 
     
 def rtf_to_text(text, encoding="cp1252", errors="strict"):
@@ -131,7 +114,7 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     str
         the converted rtf text as a python unicode string
     """
-    text = _replace_hyperlinks(text)
+    text = re.sub(HYPERLINKS, "\\1(\\2)", text) # captures links like link_text(http://link_dest)
     stack = []
     ignorable = False  # Whether this group (and all inside it) are "ignorable".
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.

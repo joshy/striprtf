@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.26 - 20.07.23
+  * Removed url hack thanks to a better regex by [stevengj](https://github.com/stevengj) also thanks to [jonas](https://github.com/joans)
+
 ## v0.0.25 - 19.05.23
   * Parameter "errors" was not used anymore. Is now fixed and a test case was added. Thanks [powo](https://github.com/powo) for reporting.
 

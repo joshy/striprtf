@@ -2,11 +2,11 @@
 ![Build status](https://github.com/joshy/striprtf/workflows/striprtf%20build/badge.svg)
 
 ## Purpose
-This is a simple library to convert rtf files to python strings. A lot of
-medical documents are written in rtf format which is not ideal for parsing
+This is a simple library to convert Rich Text Format (RTF) files to python strings. 
+A lot of medical documents are written in RTF format which is not ideal for parsing
 and further processing. This library converts it to plain old text.
 
-## How to use
+## How to use it
 ```python
 from striprtf.striprtf import rtf_to_text
 rtf = "some rtf encoded string"
@@ -14,8 +14,8 @@ text = rtf_to_text(rtf)
 print(text)
 ```
 
-If you want to use a different encoding than `cp1252` you can pass it via the parameter `encoding`. This 
-is only taken into account if no explicit codepage has been set. 
+If you want to use a different encoding than `cp1252` you can pass it via the `encoding`
+parameter. This is only taken into account if no explicit codepage has been set. 
 ```python
 from striprtf.striprtf import rtf_to_text
 rtf = "some rtf encoded string in latin1"
@@ -32,9 +32,11 @@ text = rtf_to_text(rtf, errors="ignore")
 print(text)
 ```
 
-## How to use online
-If you don't want to install, there is also an online version available at https://striprtf.dev which can be used for free. 
+## Online version
+If you don't want to install or just try it out there is an [online version](https://striprtf.dev) available. 
 
+## PostgreSQL 
+There is also a [PostgreSQL version](https://github.com/MnhnL/pg_striprtf) available from [Raffael Mancini](https://github.com/raffael-mnhn).
 
 ## History
 [Pyth](https://github.com/brendonh/pyth) was not working for the rtf files I
@@ -47,7 +49,6 @@ In the meantime some encodings bugs have been fixed. :-)
 
 ## Pushing to PyPi
  * pip install twine
-
 
 Run commands
 ```

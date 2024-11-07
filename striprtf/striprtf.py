@@ -52,46 +52,42 @@ destinations = frozenset((
 ))
 # fmt: on
 charset_map = {
-        0: 'cp1252',  # Default
-        42: 'cp1252',  # Symbol
-        77: 'mac_roman',  # Mac Roman
-        78: 'mac_japanese',  # Mac Japanese
-        79: 'mac_chinesetrad',  # Mac Traditional Chinese
-        80: 'mac_korean',  # Mac Korean
-        81: 'mac_arabic',  # Mac Arabic
-        82: 'mac_hebrew',  # Mac Hebrew
-        83: 'mac_greek',  # Mac Greek
-        84: 'mac_cyrillic',  # Mac Cyrillic
-        85: 'mac_chinesesimp',  # Mac Simplified Chinese
-        86: 'mac_rumanian',  # Mac Romanian
-        87: 'mac_ukrainian',  # Mac Ukrainian
-        88: 'mac_thai',  # Mac Thai
-        89: 'mac_ce',  # Mac Central European
-        128: 'cp932',  # Japanese
-        129: 'cp949',  # Korean
-        130: 'cp1361',  # Johab (Korean)
-        134: 'cp936',  # Simplified Chinese (GBK)
-        136: 'cp950',  # Traditional Chinese (Big5)
-        161: 'cp1253',  # Greek
-        162: 'cp1254',  # Turkish
-        163: 'cp1258',  # Vietnamese
-        177: 'cp1255',  # Hebrew
-        178: 'cp1256',  # Arabic
-        186: 'cp1257',  # Baltic
-        204: 'cp1251',  # Cyrillic
-        222: 'cp874',  # Thai
-        238: 'cp1250',  # Eastern European
-        254: 'cp437',  # OEM United States
-        255: 'cp850',  # OEM Multilingual Latin 1
-    }
+    0: "cp1252",  # Default
+    42: "cp1252",  # Symbol
+    77: "mac_roman",  # Mac Roman
+    78: "mac_japanese",  # Mac Japanese
+    79: "mac_chinesetrad",  # Mac Traditional Chinese
+    80: "mac_korean",  # Mac Korean
+    81: "mac_arabic",  # Mac Arabic
+    82: "mac_hebrew",  # Mac Hebrew
+    83: "mac_greek",  # Mac Greek
+    84: "mac_cyrillic",  # Mac Cyrillic
+    85: "mac_chinesesimp",  # Mac Simplified Chinese
+    86: "mac_rumanian",  # Mac Romanian
+    87: "mac_ukrainian",  # Mac Ukrainian
+    88: "mac_thai",  # Mac Thai
+    89: "mac_ce",  # Mac Central European
+    128: "cp932",  # Japanese
+    129: "cp949",  # Korean
+    130: "cp1361",  # Johab (Korean)
+    134: "cp936",  # Simplified Chinese (GBK)
+    136: "cp950",  # Traditional Chinese (Big5)
+    161: "cp1253",  # Greek
+    162: "cp1254",  # Turkish
+    163: "cp1258",  # Vietnamese
+    177: "cp1255",  # Hebrew
+    178: "cp1256",  # Arabic
+    186: "cp1257",  # Baltic
+    204: "cp1251",  # Cyrillic
+    222: "cp874",  # Thai
+    238: "cp1250",  # Eastern European
+    254: "cp437",  # OEM United States
+    255: "cp850",  # OEM Multilingual Latin 1
+}
 
 # Translation of some special characters.
 # and section characters reset formatting
-sectionchars = {
-    "par": "\n",
-    "sect": "\n\n",
-    "page": "\n\n"
-}
+sectionchars = {"par": "\n", "sect": "\n\n", "page": "\n\n"}
 specialchars = {
     "line": "\n",
     "tab": "\t",
@@ -109,14 +105,13 @@ specialchars = {
     "cell": "|",
     "nestcell": "|",
     "~": "\xa0",
-    "\n":"\n",
+    "\n": "\n",
     "\r": "\r",
     "{": "{",
     "}": "}",
     "\\": "\\",
     "-": "\xad",
-    "_": "\u2011"
-
+    "_": "\u2011",
 } | sectionchars
 
 PATTERN = re.compile(
@@ -126,13 +121,12 @@ PATTERN = re.compile(
 
 HYPERLINKS = re.compile(
     r"(\{\\field\{\s*\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}{2}\s*\{.*?\s+(.*?)\}{2,3})",
-    re.IGNORECASE
+    re.IGNORECASE,
 )
 
 
-
 def rtf_to_text(text, encoding="cp1252", errors="strict"):
-    """ Converts the rtf text to plain text.
+    """Converts the rtf text to plain text.
 
     Parameters
     ----------
@@ -150,7 +144,9 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     str
         the converted rtf text as a python unicode string
     """
-    text = re.sub(HYPERLINKS, "\\1(\\2)", text)  # captures links like link_text(http://link_dest)
+    text = re.sub(
+        HYPERLINKS, "\\1(\\2)", text
+    )  # captures links like link_text(http://link_dest)
     stack = []
     fonttbl = {}
     default_font = None
@@ -160,12 +156,17 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     ucskip = 1  # Number of ASCII characters to skip after a unicode character.
     curskip = 0  # Number of ASCII characters left to skip
     hexes = None
-    out = ''
+    out = ""
 
     for match in PATTERN.finditer(text):
         word, arg, _hex, char, brace, tchar = match.groups()
         if hexes and not _hex:
-            out += bytes.fromhex(hexes).decode(encoding=fonttbl.get(current_font, {'encoding': encoding}).get('encoding'), errors=errors)
+            out += bytes.fromhex(hexes).decode(
+                encoding=fonttbl.get(current_font, {"encoding": encoding}).get(
+                    "encoding", encoding
+                ),
+                errors=errors,
+            )
             hexes = None
         if brace:
             curskip = 0
@@ -226,8 +227,8 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
                 fonttbl = {}
                 suppress_output = True
             elif word == "fcharset":
-                fonttbl[current_font]['charset'] = arg
-                fonttbl[current_font]['encoding'] = charset_map.get(int(arg), encoding)
+                fonttbl[current_font]["charset"] = arg
+                fonttbl[current_font]["encoding"] = charset_map.get(int(arg), encoding)
                 ignorable = True
             elif word == "deff":
                 default_font = arg
@@ -246,8 +247,5 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
                 curskip -= 1
             elif not ignorable and not suppress_output:
                 out += tchar
-    print(fonttbl)
-
-
 
     return out

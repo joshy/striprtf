@@ -1,5 +1,4 @@
 import unittest
-from pathlib import Path
 
 from striprtf.striprtf import rtf_to_text
 

@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.27 - 07.11.24
+  * Support for `fonttbl` added by [sannies](https://github.com/sannies). Thanks a lot! Fixes [#53](https://github.com/joshy/striprtf/issues/53)
+
 ## v0.0.26 - 20.07.23
   * Removed url hack thanks to a better regex by [stevengj](https://github.com/stevengj) also thanks to [jonas](https://github.com/joans)
 

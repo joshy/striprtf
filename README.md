@@ -47,12 +47,3 @@ https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 
 In the meantime some encodings bugs have been fixed. :-)
 
-## Pushing to PyPi
- * pip install twine
-
-Run commands
-```
-python setup.py sdist bdist_wheel
-twine upload -r testpypi dist/*
-twine upload -r pypi dist/*
-```

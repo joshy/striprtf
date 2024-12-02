@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.28 - 02.12.24
+  * Now documents with multiple charsets should be parsed fine. See `test_case_55.py`
+
 ## v0.0.27 - 07.11.24
   * Support for `fonttbl` added by [sannies](https://github.com/sannies). Thanks a lot! Fixes [#53](https://github.com/joshy/striprtf/issues/53)
 

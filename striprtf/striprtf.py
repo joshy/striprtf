@@ -15,7 +15,7 @@ destinations = frozenset((
     'colortbl','comment','company','creatim','datafield','datastore','defchp','defpap',
     'do','doccomm','docvar','dptxbxtext','ebcend','ebcstart','factoidname','falt',
     'fchars','ffdeftext','ffentrymcr','ffexitmcr','ffformat','ffhelptext','ffl',
-    'ffname','ffstattext','file','filetbl','fldinst','fldtype',
+    'ffname','ffstattext','file','filetbl','fldinst','fldtype','fonttbl',
     'fname','fontemb','fontfile','footer','footerf','footerl','footerr',
     'footnote','formfield','ftncn','ftnsep','ftnsepc','g','generator','gridtbl',
     'header','headerf','headerl','headerr','hl','hlfr','hlinkbase','hlloc','hlsrc',
@@ -127,6 +127,7 @@ HYPERLINKS = re.compile(
     re.IGNORECASE,
 )
 
+FONTTABLE = re.compile(r"\\f(\d+).*?\\fcharset(\d+).*?([^;]+);")
 
 def rtf_to_text(text, encoding="cp1252", errors="strict"):
     """Converts the rtf text to plain text.
@@ -161,9 +162,19 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     hexes = None
     out = ""
 
+    # Simplified font table regex
+
+    fonttbl_matches = FONTTABLE.findall(text)
+    for font_id, fcharset, font_name in fonttbl_matches:
+        fonttbl[font_id] = {
+            "name": font_name.strip(),
+            "charset": fcharset,
+            "encoding": charset_map.get(int(fcharset), encoding),
+        }
     for match in PATTERN.finditer(text):
         word, arg, _hex, char, brace, tchar = match.groups()
         if hexes and not _hex:
+            # Decode accumulated hexes
             out += bytes.fromhex(hexes).decode(
                 encoding=fonttbl.get(current_font, {"encoding": encoding}).get(
                     "encoding", encoding
@@ -206,7 +217,7 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
                     codecs.lookup(encoding)
                 except LookupError:
                     encoding = "utf8"
-            if ignorable:
+            if ignorable or suppress_output:
                 pass
             elif word in specialchars:
                 out += specialchars[word]
@@ -224,23 +235,18 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
                     curskip = ucskip
             elif word == "f":
                 current_font = arg
-                if current_font not in fonttbl:
-                    fonttbl[current_font] = {}
-            elif word == "fonttbl":
-                fonttbl = {}
-                suppress_output = True
-            elif word == "fcharset":
-                fonttbl[current_font]["charset"] = arg
-                fonttbl[current_font]["encoding"] = charset_map.get(int(arg), encoding)
-                ignorable = True
             elif word == "deff":
                 default_font = arg
+            elif word == "fonttbl":
+                suppress_output = True
+            elif word == "colortbl":
+                suppress_output = True
 
         elif _hex:  # \'xx
             if curskip > 0:
                 curskip -= 1
             elif not ignorable:
-                c = int(_hex, 16)
+                # Accumulate hex characters to decode later
                 if not hexes:
                     hexes = _hex
                 else:

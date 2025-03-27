@@ -49,7 +49,7 @@ python_files = ["test_*.py"]
 
 [tool.ruff]
 line-length = 88
-target-version = "py37"
+target-version = "py38"
 
 [[tool.uv.index]]
 name = "pypi"

@@ -2,9 +2,7 @@
 ![Build status](https://github.com/joshy/striprtf/workflows/striprtf%20build/badge.svg)
 
 ## Purpose
-This is a simple library to convert Rich Text Format (RTF) files to python strings. 
-A lot of medical documents are written in RTF format which is not ideal for parsing
-and further processing. This library converts it to plain old text.
+This is a library to convert Rich Text Format (RTF) files to plain text files. A lot of medical documents are written in RTF format which is not ideal for parsing and further processing. This library converts it to plain old text.
 
 ## How to use it
 ```python

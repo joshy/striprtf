@@ -1,24 +1,33 @@
-name: striprtf build
-on: [push]
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: 
-          - "3.8"
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12"
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-            python-version: ${{ matrix.python-version }}
-            allow-prereleases: true
-      - name: Install dependencies
-        run: |
-          python -m pip install -r requirements.txt
-      - name: run tests
-        run: python -m pytest --color=yes
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install uv
+      run: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+    - name: Install dependencies
+      run: |
+        uv pip install -e ".[dev]"
+    - name: Build with uv
+      run: |
+        uv build
+    - name: Test with pytest
+      run: |
+        pytest

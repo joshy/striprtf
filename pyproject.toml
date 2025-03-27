@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling>=1.21.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "striprtf"
+dynamic = ["version"]
+description = "A simple library to convert rtf to text"
+readme = "README.md"
+requires-python = ">=3.7"
+license = "BSD-3-Clause"
+authors = [
+    { name = "Joshy Cyriac", email = "joshy@posteo.ch" }
+]
+keywords = ["rtf"]
+classifiers = [
+    "License :: OSI Approved :: BSD License",
+]
+dependencies = []
+scripts = { striprtf = "striprtf.striprtf:main" }
+
+[project.urls]
+Homepage = "https://github.com/joshy/striprtf"
+Repository = "https://github.com/joshy/striprtf.git"
+Download = "https://github.com/joshy/striprtf/archive/v{version}.tar.gz"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "build>=1.0.0",
+]
+
+[tool.hatch.version]
+path = "striprtf/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["striprtf"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "striprtf/**/*.py",
+    "README.md",
+    "LICENSE",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py37"
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple/"
+publish-url = "https://upload.pypi.org/legacy/"
+explicit = true
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true 

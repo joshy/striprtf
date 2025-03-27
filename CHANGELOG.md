@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.29 - 27.03.25
+  * Binary encoded images will be removed before parsing the rtf. See `test_case_58.py` 
+
 ## v0.0.28 - 03.12.24
   * Now documents with multiple charsets should be parsed correctly. See `test_case_55.py`
 

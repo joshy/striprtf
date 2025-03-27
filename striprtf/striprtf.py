@@ -127,6 +127,55 @@ HYPERLINKS = re.compile(
     re.IGNORECASE,
 )
 
+
+def remove_pict_groups(rtf_text):
+    """
+    Remove all \\pict groups with binary data from the RTF text.
+    If no binary-encoded \\pict groups are found, return the original text.
+    See issue 58
+    """
+    # Fast check to see if \pict and \bin exist together in the text
+    if "\\pict" not in rtf_text or "\\bin" not in rtf_text:
+        return rtf_text
+    result = []  # Stores the final RTF text without binary-encoded \pict groups
+    i = 0
+    n = len(rtf_text)
+    in_pict = False  # Flag to track if we're inside a \pict group
+    binary_length = 0  # Length of binary data to skip
+
+    while i < n:
+        if not in_pict and rtf_text.startswith("\\pict", i):
+            # Start of a \pict group
+            in_pict = True
+            i += len("\\pict")  # Skip the \pict keyword
+            continue
+
+        if in_pict:
+            if rtf_text.startswith("\\bin", i):
+                # Extract the length of binary data
+                i += len("\\bin")
+                length_str = ""
+                while i < n and rtf_text[i].isdigit():
+                    length_str += rtf_text[i]
+                    i += 1
+                binary_length = int(length_str)
+                # Skip the binary data
+                i += binary_length
+                continue
+            elif rtf_text[i] == "}":
+                # End of the \pict group
+                in_pict = False
+                i += 1  # Skip the closing brace
+                continue
+
+        if not in_pict:
+            # Append characters outside \pict groups
+            result.append(rtf_text[i])
+
+        i += 1  # Move to the next character
+
+    return "".join(result)
+
 FONTTABLE = re.compile(r"\\f(\d+).*?\\fcharset(\d+).*?([^;]+);")
 
 def rtf_to_text(text, encoding="cp1252", errors="strict"):
@@ -148,6 +197,9 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     str
         the converted rtf text as a python unicode string
     """
+    # Preprocess the RTF text to remove \pict groups
+    text = remove_pict_groups(text)
+
     text = re.sub(
         HYPERLINKS, "\\1(\\2)", text
     )  # captures links like link_text(http://link_dest)
@@ -163,7 +215,6 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     out = ""
 
     # Simplified font table regex
-
     fonttbl_matches = FONTTABLE.findall(text)
     for font_id, fcharset, font_name in fonttbl_matches:
         fonttbl[font_id] = {

@@ -39,6 +39,7 @@ packages = ["striprtf"]
 [tool.hatch.build.targets.sdist]
 include = [
     "striprtf/**/*.py",
+    "striprtf/py.typed",
     "README.md",
     "LICENSE",
 ]

@@ -21,7 +21,7 @@ destinations = frozenset((
     'header','headerf','headerl','headerr','hl','hlfr','hlinkbase','hlloc','hlsrc',
     'hsv','htmltag','info','keycode','keywords','latentstyles','lchars','levelnumbers',
     'leveltext','lfolevel','linkval','list','listlevel','listname','listoverride',
-    'listoverridetable','listpicture','liststylename','listtable','listtext',
+    'listoverridetable','listpicture','liststylename','listtable',
     'lsdlockedexcept','macc','maccPr','mailmerge','maln','malnScr','manager','margPr',
     'mbar','mbarPr','mbaseJc','mbegChr','mborderBox','mborderBoxPr','mbox','mboxPr',
     'mchr','mcount','mctrlPr','md','mdeg','mdegHide','mden','mdiff','mdPr','me',

@@ -93,31 +93,12 @@ Use this `launch.json` configuration for VS Code:
 uv build
 ```
 
-2. Upload to TestPyPI (recommended for testing):
-```sh
-uv publish --index testpypi
+2. Publish the package 
+uv add twine
 ```
-
-3. Upload to PyPI:
-```sh
-uv publish --index pypi
-```
-
-Note: Make sure you have set up your PyPI credentials in the `.env` file or as environment variables before publishing.
-
-The PyPI and TestPyPI configurations are already set up in your `pyproject.toml`:
-```toml
-[[tool.uv.index]]
-name = "pypi"
-url = "https://pypi.org/simple/"
-publish-url = "https://upload.pypi.org/legacy/"
-explicit = true
-
-[[tool.uv.index]]
-name = "testpypi"
-url = "https://test.pypi.org/simple/"
-publish-url = "https://test.pypi.org/legacy/"
-explicit = true
+python setup.py sdist bdist_wheel
+twine upload -r testpypi dist/*
+twine upload -r pypi dist/*
 ```
 
 ## Project Structure

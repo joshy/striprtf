@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.30 - 23.04.206
+  * Fixed https://github.com/joshy/striprtf/issues/63
+  * Added py.typed for MyPy support
+
 ## v0.0.29 - 27.03.25
   * Binary encoded images will be removed before parsing the rtf. See `test_case_58.py` 
 

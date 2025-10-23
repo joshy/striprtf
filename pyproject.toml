@@ -16,7 +16,9 @@ keywords = ["rtf"]
 classifiers = [
     "License :: OSI Approved :: BSD License",
 ]
-dependencies = []
+dependencies = [
+    "twine>=6.1.0",
+]
 scripts = { striprtf = "striprtf.striprtf:main" }
 
 [project.urls]

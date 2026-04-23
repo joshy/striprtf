@@ -17,7 +17,7 @@ classifiers = [
     "License :: OSI Approved :: BSD License",
 ]
 dependencies = [
-    "twine>=6.1.0",
+    
 ]
 scripts = { striprtf = "striprtf.striprtf:main" }
 
@@ -30,6 +30,7 @@ Download = "https://github.com/joshy/striprtf/archive/v{version}.tar.gz"
 dev = [
     "pytest>=7.0.0",
     "build>=1.0.0",
+    "twine>=6.1.0",
 ]
 
 [tool.hatch.version]

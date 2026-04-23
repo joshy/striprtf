@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.31 - 23.04.206
+  * Accidently added twine as runtime dependency
+
 ## v0.0.30 - 23.04.206
   * Fixed https://github.com/joshy/striprtf/issues/63
   * Added py.typed for MyPy support

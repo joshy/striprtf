@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.32 - 27.04.206
+  * Wrong _version file
+
 ## v0.0.31 - 23.04.206
   * Accidently added twine as runtime dependency
 

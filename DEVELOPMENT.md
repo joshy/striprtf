@@ -96,11 +96,14 @@ uv build
 2. Publish the package 
 uv add twine
 ```
-python setup.py sdist bdist_wheel
 twine upload -r testpypi dist/*
 twine upload -r pypi dist/*
-```
 
+3. Tags
+```
+jj git set v0.0.31 -r master
+jj git export && git push origin v0.0.31
+```
 ## Project Structure
 
 - `striprtf/` - Main package directory

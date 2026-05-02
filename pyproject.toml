@@ -53,6 +53,8 @@ testpaths = ["tests"]
 python_files = ["test_*.py"]
 
 [tool.mypy]
+# mypy 1.x dropped Python 3.8 support; 3.9 is the minimum supported target version.
+# The package itself still supports Python 3.8 at runtime.
 python_version = "3.9"
 strict = true
 files = ["striprtf"]

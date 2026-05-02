@@ -230,8 +230,10 @@ def rtf_to_text(text: str, encoding: str = "cp1252", errors: str = "strict") -> 
         if hexes and not _hex:
             # Decode accumulated hexes
             out += bytes.fromhex(hexes).decode(
-                encoding=fonttbl.get(current_font or "", {"encoding": encoding}).get(
-                    "encoding", encoding
+                encoding=(
+                    fonttbl[current_font].get("encoding", encoding)
+                    if current_font is not None and current_font in fonttbl
+                    else encoding
                 ),
                 errors=errors,
             )

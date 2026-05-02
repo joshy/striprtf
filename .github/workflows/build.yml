@@ -1,5 +1,5 @@
 name: striprtf build
-on: [push]
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,3 +25,7 @@ jobs:
   
       - name: Run tests
         run: uv run pytest tests
+
+      - name: Run mypy
+        if: matrix.python-version == '3.13'
+        run: uv run mypy

@@ -31,6 +31,7 @@ dev = [
     "pytest>=7.0.0",
     "build>=1.0.0",
     "twine>=6.1.0",
+    "mypy>=1.0.0",
 ]
 
 [tool.hatch.version]
@@ -50,6 +51,11 @@ include = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+files = ["striprtf"]
 
 [tool.ruff]
 line-length = 88

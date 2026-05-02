@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import re
 import codecs
+from typing import Optional
 
 """
 Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
@@ -8,7 +11,7 @@ and modified for better output of tables.
 
 # fmt: off
 # control words which specify a "destination".
-destinations = frozenset((
+destinations: frozenset[str] = frozenset((
     'aftncn','aftnsep','aftnsepc','annotation','atnauthor','atndate','atnicn','atnid',
     'atnparent','atnref','atntime','atrfend','atrfstart','author','background',
     'bkmkend','bkmkstart','blipuid','buptim','category','colorschememapping',
@@ -51,7 +54,7 @@ destinations = frozenset((
     'xmlopen',
 ))
 # fmt: on
-charset_map = {
+charset_map: dict[int, str] = {
     0: "cp1252",  # Default
     42: "cp1252",  # Symbol
     77: "mac_roman",  # Mac Roman
@@ -87,8 +90,8 @@ charset_map = {
 
 # Translation of some special characters.
 # and section characters reset formatting
-sectionchars = {"par": "\n", "sect": "\n\n", "page": "\n\n"}
-specialchars = {
+sectionchars: dict[str, str] = {"par": "\n", "sect": "\n\n", "page": "\n\n"}
+specialchars: dict[str, str] = {
     **{
         "line": "\n",
         "tab": "\t",
@@ -117,18 +120,18 @@ specialchars = {
     **sectionchars,
 }
 
-PATTERN = re.compile(
+PATTERN: re.Pattern[str] = re.compile(
     r"\\([a-z]{1,32})(-?\d{1,10})?[ ]?|\\'([0-9a-f]{2})|\\([^a-z])|([{}])|[\r\n]+|(.)",
     re.IGNORECASE,
 )
 
-HYPERLINKS = re.compile(
+HYPERLINKS: re.Pattern[str] = re.compile(
     r"(\{\\field\{\s*\\\*\\fldinst\{.*HYPERLINK\s(\".*\")\}{2}\s*\{.*?\s+(.*?)\}{2,3})",
     re.IGNORECASE,
 )
 
 
-def remove_pict_groups(rtf_text):
+def remove_pict_groups(rtf_text: str) -> str:
     """
     Remove all \\pict groups with binary data from the RTF text.
     If no binary-encoded \\pict groups are found, return the original text.
@@ -176,9 +179,9 @@ def remove_pict_groups(rtf_text):
 
     return "".join(result)
 
-FONTTABLE = re.compile(r"\\f(\d+).*?\\fcharset(\d+).*?([^;]+);")
+FONTTABLE: re.Pattern[str] = re.compile(r"\\f(\d+).*?\\fcharset(\d+).*?([^;]+);")
 
-def rtf_to_text(text, encoding="cp1252", errors="strict"):
+def rtf_to_text(text: str, encoding: str = "cp1252", errors: str = "strict") -> str:
     """Converts the rtf text to plain text.
 
     Parameters
@@ -203,16 +206,16 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     text = re.sub(
         HYPERLINKS, "\\1(\\2)", text
     )  # captures links like link_text(http://link_dest)
-    stack = []
-    fonttbl = {}
-    default_font = None
-    current_font = None
-    ignorable = False  # Whether this group (and all inside it) are "ignorable".
-    suppress_output = False  # Whether this group (and all inside it) are "ignorable".
-    ucskip = 1  # Number of ASCII characters to skip after a unicode character.
-    curskip = 0  # Number of ASCII characters left to skip
-    hexes = None
-    out = ""
+    stack: list[tuple[int, bool, bool]] = []
+    fonttbl: dict[str, dict[str, str]] = {}
+    default_font: Optional[str] = None
+    current_font: Optional[str] = None
+    ignorable: bool = False  # Whether this group (and all inside it) are "ignorable".
+    suppress_output: bool = False  # Whether this group (and all inside it) are "ignorable".
+    ucskip: int = 1  # Number of ASCII characters to skip after a unicode character.
+    curskip: int = 0  # Number of ASCII characters left to skip
+    hexes: Optional[str] = None
+    out: str = ""
 
     # Simplified font table regex
     fonttbl_matches = FONTTABLE.findall(text)
@@ -227,7 +230,7 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
         if hexes and not _hex:
             # Decode accumulated hexes
             out += bytes.fromhex(hexes).decode(
-                encoding=fonttbl.get(current_font, {"encoding": encoding}).get(
+                encoding=fonttbl.get(current_font or "", {"encoding": encoding}).get(
                     "encoding", encoding
                 ),
                 errors=errors,

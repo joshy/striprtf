@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import re
 import codecs
-from typing import Optional
 
 """
 Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
@@ -208,13 +207,13 @@ def rtf_to_text(text: str, encoding: str = "cp1252", errors: str = "strict") -> 
     )  # captures links like link_text(http://link_dest)
     stack: list[tuple[int, bool, bool]] = []
     fonttbl: dict[str, dict[str, str]] = {}
-    default_font: Optional[str] = None
-    current_font: Optional[str] = None
+    default_font: str | None = None
+    current_font: str | None = None
     ignorable: bool = False  # Whether this group (and all inside it) are "ignorable".
     suppress_output: bool = False  # Whether this group (and all inside it) are "ignorable".
     ucskip: int = 1  # Number of ASCII characters to skip after a unicode character.
     curskip: int = 0  # Number of ASCII characters left to skip
-    hexes: Optional[str] = None
+    hexes: str | None = None
     out: str = ""
 
     # Simplified font table regex

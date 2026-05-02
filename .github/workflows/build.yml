@@ -27,4 +27,5 @@ jobs:
         run: uv run pytest tests
 
       - name: Run mypy
+        if: matrix.python-version == '3.13'
         run: uv run mypy

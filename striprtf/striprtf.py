@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 import codecs
+from typing import Literal
 
 """
 Taken from https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
@@ -180,7 +181,11 @@ def remove_pict_groups(rtf_text: str) -> str:
 
 FONTTABLE: re.Pattern[str] = re.compile(r"\\f(\d+).*?\\fcharset(\d+).*?([^;]+);")
 
-def rtf_to_text(text: str, encoding: str = "cp1252", errors: str = "strict") -> str:
+def rtf_to_text(
+    text: str,
+    encoding: str = "cp1252",
+    errors: Literal["strict", "ignore", "replace", "xmlcharrefreplace", "backslashreplace", "namereplace", "surrogateescape", "surrogatepass"] = "strict",
+) -> str:
     """Converts the rtf text to plain text.
 
     Parameters

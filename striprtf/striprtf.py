@@ -176,7 +176,41 @@ def remove_pict_groups(rtf_text):
 
     return "".join(result)
 
-FONTTABLE = re.compile(r"\\f(\d+).*?\\fcharset(\d+).*?([^;]+);")
+
+CHARSET = re.compile(r"\\f(\d+).*?\\fcharset(\d+).*?([^;]+);")
+FONTTABLE = re.compile(r"{[^{]*\\fonttbl")
+
+
+def get_fonttable_str(text):
+    """
+    Helper to extract the font table from the RTF text.
+
+    Parameters
+    ----------
+    text : str
+        The RTF text.
+
+    Returns
+    -------
+    str
+        Text containing only the font table.
+    """
+    # extract substring containing font table
+    fonttable_match = FONTTABLE.search(text)
+    if not fonttable_match:
+        return ""
+    fonttable_text = fonttable_match.group()
+    pdepth = 1
+    for c in text[fonttable_match.end() :]:
+        fonttable_text += c
+        if c == "{":
+            pdepth += 1
+        elif c == "}":
+            pdepth -= 1
+        if pdepth == 0:
+            break
+    return fonttable_text
+
 
 def rtf_to_text(text, encoding="cp1252", errors="strict"):
     """Converts the rtf text to plain text.
@@ -214,14 +248,14 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     hexes = None
     out = ""
 
-    # Simplified font table regex
-    fonttbl_matches = FONTTABLE.findall(text)
-    for font_id, fcharset, font_name in fonttbl_matches:
+    # match font table entries
+    for font_id, fcharset, font_name in CHARSET.findall(get_fonttable_str(text)):
         fonttbl[font_id] = {
             "name": font_name.strip(),
             "charset": fcharset,
             "encoding": charset_map.get(int(fcharset), encoding),
         }
+
     for match in PATTERN.finditer(text):
         word, arg, _hex, char, brace, tchar = match.groups()
         if hexes and not _hex:

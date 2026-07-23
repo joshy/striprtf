@@ -45,8 +45,6 @@ For verbose output:
 pytest -v
 ```
 
-On Windows, make sure Python uses UTF-8, for example by setting the environment variable `PYTHONUTF8=1`.
-
 ## Debugging
 
 For debugging with `debugpy`, install it first:

@@ -177,6 +177,28 @@ def remove_pict_groups(rtf_text):
     return "".join(result)
 
 FONTTABLE = re.compile(r"\\f(\d+).*?\\fcharset(\d+).*?([^;]+);")
+FONTTABLE_START = re.compile(r"{[^{}]*\\fonttbl")
+BRACE = re.compile(r"[{}]")
+
+
+def font_table_group(text):
+    """
+    Return the ``{\\fonttbl ...}`` group of the RTF text, or "" if there is none.
+
+    The font table regex is expensive to run against a whole document, so it is
+    only applied to this slice. See issue 71.
+    """
+    start = FONTTABLE_START.search(text)
+    if not start:
+        return ""
+    depth = 1
+    for brace in BRACE.finditer(text, start.end()):
+        depth += 1 if brace.group() == "{" else -1
+        if depth == 0:
+            return text[start.start() : brace.end()]
+    # unbalanced braces, take what is left
+    return text[start.start() :]
+
 
 def rtf_to_text(text, encoding="cp1252", errors="strict"):
     """Converts the rtf text to plain text.
@@ -215,7 +237,7 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     out = ""
 
     # Simplified font table regex
-    fonttbl_matches = FONTTABLE.findall(text)
+    fonttbl_matches = FONTTABLE.findall(font_table_group(text))
     for font_id, fcharset, font_name in fonttbl_matches:
         fonttbl[font_id] = {
             "name": font_name.strip(),

@@ -16,7 +16,7 @@ class Fonttbl(unittest.TestCase):
 
         with example_rtf.open() as source:
             result = rtf_to_text(source.read())
-        with example_txt.open() as destination:
+        with example_txt.open(encoding="utf-8") as destination:
             self.assertEqual(destination.read(), result)
 
     def test_fonttbl_file1(self):
@@ -26,6 +26,6 @@ class Fonttbl(unittest.TestCase):
         with example_rtf.open() as source:
             result = rtf_to_text(source.read())
             print("result:::", result)
-        with example_txt.open() as destination:
+        with example_txt.open(encoding="utf-8") as destination:
             self.assertEqual(destination.read(), result)
   

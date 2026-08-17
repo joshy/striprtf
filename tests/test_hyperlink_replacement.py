@@ -14,5 +14,5 @@ class TestSimple(unittest.TestCase):
 
         with hyperlink_rtf.open() as source:
             result = rtf_to_text(source.read())
-        with hyperlink_txt.open() as destination:
+        with hyperlink_txt.open(encoding="utf-8") as destination:
             self.assertEqual(destination.read(), result)

@@ -27,7 +27,7 @@ class TestLargeRtf(unittest.TestCase):
     def test_large_rtf(self):
         example_txt = TEXT_DIR / "large_rtf.txt"
 
-        with example_txt.open() as destination:
+        with example_txt.open(encoding="utf-8") as destination:
             self.maxDiff = None
             self.assertEqual(destination.read(), self.result)
 

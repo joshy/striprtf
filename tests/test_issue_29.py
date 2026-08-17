@@ -15,7 +15,7 @@ class TestCyrillic(unittest.TestCase):
 
         with example_rtf.open() as source:
             result = rtf_to_text(source.read())
-        with example_txt.open() as destination:
+        with example_txt.open(encoding="utf-8") as destination:
             self.assertEqual(destination.read(), result)
 
     def test_bad(self):
@@ -24,5 +24,5 @@ class TestCyrillic(unittest.TestCase):
 
         with example_rtf.open() as source:
             result = rtf_to_text(source.read())
-        with example_txt.open() as destination:
+        with example_txt.open(encoding="utf-8") as destination:
             self.assertEqual(destination.read(), result)

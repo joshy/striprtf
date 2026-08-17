@@ -21,5 +21,5 @@ class TestListtextNumbering(unittest.TestCase):
             raw = source.read()
             result = rtf_to_text(raw)
 
-        with example_txt.open() as destination:
+        with example_txt.open(encoding="utf-8") as destination:
             self.assertEqual(destination.read(), result)

@@ -1,5 +1,6 @@
 [build-system]
-requires = ["hatchling>=1.21.0"]
+# hatchling 1.32+ emits Metadata-Version 2.5, which twine/PyPI reject (2.4 is the max accepted)
+requires = ["hatchling>=1.21.0,<1.32"]
 build-backend = "hatchling.build"
 
 [project]

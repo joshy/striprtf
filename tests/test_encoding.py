@@ -16,3 +16,12 @@ class TestEncoding(unittest.TestCase):
             result = rtf_to_text(source.read(), errors="ignore")
         with example_txt.open(encoding="utf-8") as destination:
             self.assertEqual(destination.read(), result)
+
+    def test_second_document(self):
+        example_rtf = RTF_DIR / "encoding_2.rtf"
+        example_txt = TEXT_DIR / "encoding_2.txt"
+
+        with example_rtf.open() as source:
+            result = rtf_to_text(source.read(), errors="ignore")
+        with example_txt.open(encoding="utf-8") as destination:
+            self.assertEqual(destination.read(), result)

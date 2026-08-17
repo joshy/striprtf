@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.0.33 - 17.08.26
+  * Bytes after the document closing brace are no longer part of the output. An rtf file is a single
+    `{ <header> <document> }` group, everything after it is discarded like Word and WordPad do.
+    Fixes [#69](https://github.com/joshy/striprtf/issues/69).
+    Note that this also ends support for parsing several rtf documents concatenated into one string,
+    only the first one is returned now. See `test_issue_69.py`
+  * Fixed a bottleneck where the font table regex was applied to the whole document instead of only
+    the `{\fonttbl ...}` group. Parsing a 2.4 MB document went from 140s down to 0.37s. See `test_large_rtf.py`
+
 ## v0.0.32 - 27.04.206
   * Wrong _version file
 

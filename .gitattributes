@@ -1,0 +1,2 @@
+# RTF fixtures with binary data (\binN counts bytes): no line ending conversion
+tests/rtf/pict_bin*.rtf binary

@@ -128,52 +128,55 @@ HYPERLINKS = re.compile(
 )
 
 
+PICT = re.compile(r"\\pict(?![a-zA-Z])")
+# inside a \pict group: \binN (N bytes of binary data follow after the optional space),
+# escaped characters and braces
+PICT_TOKEN = re.compile(r"\\bin(\d+) ?|\\[\\{}]|[{}]")
+
+
+def _pict_group_end(rtf_text, i):
+    """
+    Return the position of the brace closing the \\pict group whose content starts
+    at ``i`` (or the length of the text if the group is not closed). The group can
+    contain nested groups (e.g. ``{\\*\\blipuid ...}``) and binary data (``\\binN``),
+    which is N bytes of any value, braces too.
+    """
+    depth = 0
+    while True:
+        token = PICT_TOKEN.search(rtf_text, i)
+        if not token:
+            return len(rtf_text)
+        if token.group(1) is not None:  # \binN: skip the binary data
+            i = token.end() + int(token.group(1))
+            continue
+        i = token.end()
+        if token.group() == "{":
+            depth += 1
+        elif token.group() == "}":
+            if depth == 0:
+                return token.start()
+            depth -= 1
+
+
 def remove_pict_groups(rtf_text):
     """
-    Remove all \\pict groups with binary data from the RTF text.
+    Remove the content of all \\pict groups if there is binary data in the RTF text.
     If no binary-encoded \\pict groups are found, return the original text.
+    The braces of the \\pict groups are kept, so that the group structure of the
+    document does not change.
     See issue 58
     """
     # Fast check to see if \pict and \bin exist together in the text
     if "\\pict" not in rtf_text or "\\bin" not in rtf_text:
         return rtf_text
-    result = []  # Stores the final RTF text without binary-encoded \pict groups
+    result = []  # Stores the final RTF text without the content of \pict groups
     i = 0
-    n = len(rtf_text)
-    in_pict = False  # Flag to track if we're inside a \pict group
-    binary_length = 0  # Length of binary data to skip
-
-    while i < n:
-        if not in_pict and rtf_text.startswith("\\pict", i):
-            # Start of a \pict group
-            in_pict = True
-            i += len("\\pict")  # Skip the \pict keyword
-            continue
-
-        if in_pict:
-            if rtf_text.startswith("\\bin", i):
-                # Extract the length of binary data
-                i += len("\\bin")
-                length_str = ""
-                while i < n and rtf_text[i].isdigit():
-                    length_str += rtf_text[i]
-                    i += 1
-                binary_length = int(length_str)
-                # Skip the binary data
-                i += binary_length
-                continue
-            elif rtf_text[i] == "}":
-                # End of the \pict group
-                in_pict = False
-                i += 1  # Skip the closing brace
-                continue
-
-        if not in_pict:
-            # Append characters outside \pict groups
-            result.append(rtf_text[i])
-
-        i += 1  # Move to the next character
-
+    for start in PICT.finditer(rtf_text):
+        if start.start() < i:
+            continue  # "\pict" inside the binary data of a skipped \pict group
+        result.append(rtf_text[i : start.start()])
+        i = _pict_group_end(rtf_text, start.end())
+    result.append(rtf_text[i:])
     return "".join(result)
 
 FONTTABLE = re.compile(r"\\f(\d+).*?\\fcharset(\d+).*?([^;]+);")

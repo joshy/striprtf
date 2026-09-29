@@ -1,0 +1,4 @@
+Text before the picture.
+Text after the picture.
+Text after a hex encoded picture.
+Text at the end of the document.

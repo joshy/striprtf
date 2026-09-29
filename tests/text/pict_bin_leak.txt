@@ -1,0 +1,3 @@
+First paragraph.
+Second paragraph, after a picture in the document body.
+Third paragraph, after a picture in a shppict group.

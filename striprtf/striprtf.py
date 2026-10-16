@@ -263,12 +263,12 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
                 # Push state
                 depth += 1
                 in_document = True
-                stack.append((ucskip, ignorable, suppress_output))
+                stack.append((ucskip, ignorable, suppress_output, current_font))
             elif brace == "}":
                 # Pop state
                 depth -= 1
                 if stack:
-                    ucskip, ignorable, suppress_output = stack.pop()
+                    ucskip, ignorable, suppress_output, current_font = stack.pop()
                 # sample_3.rtf throws an IndexError because of stack being empty.
                 # don't know right now how this could happen, so for now this is
                 # a ugly hack to prevent it

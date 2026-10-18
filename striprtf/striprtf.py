@@ -339,4 +339,6 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
             elif not ignorable and not suppress_output:
                 out += tchar
 
-    return out
+    # RTF Unicode escapes are UTF-16 code units. Combine surrogate pairs while
+    # preserving the existing behavior for unpaired surrogates in malformed RTF.
+    return out.encode("utf-16-le", "surrogatepass").decode("utf-16-le", "surrogatepass")

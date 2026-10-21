@@ -35,11 +35,11 @@ wheels = [
 
 [[package]]
 name = "certifi"
-version = "2025.1.31"
+version = "2026.10.19"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/1c/ab/c9f1e32b7b1bf505bf26f0ef697775960db7932abeb7b516de930ba2705f/certifi-2025.1.31.tar.gz", hash = "sha256:3d5da6925056f6f18f119200434a4780a94263f10d1c21d032a6f6b2baa20651", size = 167577, upload-time = "2025-01-31T02:16:47.166Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a6/bd/1436c50cc46699de0230fbaacc1d1de7bfec413176099949e9d5112e88f2/certifi-2026.10.19.tar.gz", hash = "sha256:035c1e85572b141bf1c3a3eff0e33a8eb74917522f2559075ff8d2fea780a1ae", size = 137598, upload-time = "2026-10-20T02:24:16.604Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/38/fc/bce832fd4fd99766c04d1ee0eead6b0ec6486fb100ae5e74c1d91292b982/certifi-2025.1.31-py3-none-any.whl", hash = "sha256:ca78db4565a652026a4db2bcdf68f2fb589ea80d0be70e03929ed730746b84fe", size = 166393, upload-time = "2025-01-31T02:16:45.015Z" },
+    { url = "https://files.pythonhosted.org/packages/c4/51/29046e48f693c54e5b7412216d447a1d8362c9653148d98c02cdf65fa733/certifi-2026.10.19-py3-none-any.whl", hash = "sha256:42d35340cc5b9ba78e818ddbff0c5b1c2b779de448a340fd1b989f5fa8670e1b", size = 136464, upload-time = "2026-10-20T02:24:15.072Z" },
 ]
 
 [[package]]
@@ -47,7 +47,7 @@ name = "cffi"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "python_full_version > '3.9' and implementation_name != 'PyPy'" },
+    { name = "pycparser", marker = "implementation_name != 'PyPy'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/eb/56/b1ba7935a17738ae8453301356628e8147c79dbb825bcbc73dc7401f9846/cffi-2.0.0.tar.gz", hash = "sha256:44d1b5909021139fe36001ae048dbdde8214afa20200eda0f64c068cac5d5529", size = 523588, upload-time = "2025-09-08T23:24:04.541Z" }
 wheels = [
@@ -190,8 +190,8 @@ name = "cryptography"
 version = "48.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "python_full_version > '3.9' and platform_python_implementation != 'PyPy'" },
-    { name = "typing-extensions", version = "4.15.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version > '3.9' and python_full_version < '3.11'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
+    { name = "typing-extensions", version = "4.15.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/12/45/870e7f4bef50e5f53b9f51d4428aee5290eedf58ba443f16b1ebb7ab8e66/cryptography-48.0.1.tar.gz", hash = "sha256:266f4ee051abb2f725b74ef8072b521ce1feacf685a3364fa6a6b45548db791a", size = 832989, upload-time = "2026-06-09T22:32:31.8Z" }
 wheels = [
@@ -291,7 +291,7 @@ resolution-markers = [
     "python_full_version < '3.9'",
 ]
 dependencies = [
-    { name = "zipp", version = "3.20.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
+    { name = "zipp", version = "3.20.2", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cd/12/33e59336dca5be0c398a7482335911a33aa0e20776128f038019f1a95f1b/importlib_metadata-8.5.0.tar.gz", hash = "sha256:71522656f0abace1d072b9e5481a48f07c138e00f079c38c8f883823f9c26bd7", size = 55304, upload-time = "2024-09-11T14:56:08.937Z" }
 wheels = [
@@ -307,7 +307,7 @@ resolution-markers = [
     "python_full_version == '3.9'",
 ]
 dependencies = [
-    { name = "zipp", version = "3.21.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
+    { name = "zipp", version = "3.21.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/33/08/c1395a292bb23fd03bdf572a1357c5a733d3eecbab877641ceacab23db6e/importlib_metadata-8.6.1.tar.gz", hash = "sha256:310b41d755445d74569f993ccfc22838295d9fe005425094fad953d7f15c8580", size = 55767, upload-time = "2025-01-20T22:21:30.429Z" }
 wheels = [
@@ -328,7 +328,7 @@ name = "jaraco-classes"
 version = "3.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "more-itertools", marker = "python_full_version > '3.9'" },
+    { name = "more-itertools" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/06/c0/ed4a27bc5571b99e3cff68f8a9fa5b56ff7df1c2251cc715a652ddd26402/jaraco.classes-3.4.0.tar.gz", hash = "sha256:47a024b51d0239c0dd8c8540c6c7f484be3b8fcf0b2d85c13825780d3b3f3acd", size = 11780, upload-time = "2024-03-31T07:27:36.643Z" }
 wheels = [
@@ -340,7 +340,7 @@ name = "jaraco-context"
 version = "6.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "backports-tarfile", marker = "python_full_version > '3.9' and python_full_version < '3.12'" },
+    { name = "backports-tarfile", marker = "python_full_version < '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/df/ad/f3777b81bf0b6e7bc7514a1656d3e637b2e8e15fab2ce3235730b3e7a4e6/jaraco_context-6.0.1.tar.gz", hash = "sha256:9bae4ea555cf0b14938dc0aee7c9f32ed303aa20a3b73e7dc80111628792d1b3", size = 13912, upload-time = "2024-08-20T03:39:27.358Z" }
 wheels = [
@@ -352,7 +352,7 @@ name = "jaraco-functools"
 version = "4.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "more-itertools", marker = "python_full_version > '3.9'" },
+    { name = "more-itertools" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ab/23/9894b3df5d0a6eb44611c36aec777823fc2e07740dabbd0b810e19594013/jaraco_functools-4.1.0.tar.gz", hash = "sha256:70f7e0e2ae076498e212562325e805204fc092d7b4c17e0e86c959e249701a9d", size = 19159, upload-time = "2024-09-27T19:47:09.122Z" }
 wheels = [
@@ -377,8 +377,8 @@ resolution-markers = [
     "python_full_version < '3.9'",
 ]
 dependencies = [
-    { name = "pywin32-ctypes", marker = "python_full_version <= '3.9' and sys_platform == 'win32'" },
-    { name = "secretstorage", version = "2.2.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version <= '3.9' and sys_platform == 'linux'" },
+    { name = "pywin32-ctypes", marker = "sys_platform == 'win32'" },
+    { name = "secretstorage", version = "2.2.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/93/b2/66cab0195a41415567ccfbf0e02c3ecc7f423729ca0c385819afbcd8e256/keyring-21.0.0.tar.gz", hash = "sha256:5f5f92327b6c7432bebc18a1b60cb3797d99b08db1f5b919b8187c37a01f1ccc", size = 53474, upload-time = "2019-12-24T20:01:38.041Z" }
 wheels = [
@@ -393,13 +393,13 @@ resolution-markers = [
     "python_full_version > '3.9'",
 ]
 dependencies = [
-    { name = "importlib-metadata", version = "8.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version > '3.9' and python_full_version < '3.12'" },
-    { name = "jaraco-classes", marker = "python_full_version > '3.9'" },
-    { name = "jaraco-context", marker = "python_full_version > '3.9'" },
-    { name = "jaraco-functools", marker = "python_full_version > '3.9'" },
-    { name = "jeepney", marker = "python_full_version > '3.9' and sys_platform == 'linux'" },
-    { name = "pywin32-ctypes", marker = "python_full_version > '3.9' and sys_platform == 'win32'" },
-    { name = "secretstorage", version = "3.3.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version > '3.9' and sys_platform == 'linux'" },
+    { name = "importlib-metadata", version = "8.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "jaraco-classes" },
+    { name = "jaraco-context" },
+    { name = "jaraco-functools" },
+    { name = "jeepney", marker = "sys_platform == 'linux'" },
+    { name = "pywin32-ctypes", marker = "sys_platform == 'win32'" },
+    { name = "secretstorage", version = "3.3.3", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/70/09/d904a6e96f76ff214be59e7aa6ef7190008f52a0ab6689760a98de0bf37d/keyring-25.6.0.tar.gz", hash = "sha256:0b39998aa941431eb3d9b0d4b2460bc773b9df6fed7621c2dfb291a7e0187a66", size = 62750, upload-time = "2024-12-25T15:26:45.782Z" }
 wheels = [
@@ -552,9 +552,9 @@ resolution-markers = [
     "python_full_version < '3.9'",
 ]
 dependencies = [
-    { name = "docutils", version = "0.20.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
-    { name = "nh3", marker = "python_full_version < '3.9'" },
-    { name = "pygments", marker = "python_full_version < '3.9'" },
+    { name = "docutils", version = "0.20.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "nh3" },
+    { name = "pygments" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fe/b5/536c775084d239df6345dccf9b043419c7e3308bc31be4c7882196abc62e/readme_renderer-43.0.tar.gz", hash = "sha256:1818dd28140813509eeed8d62687f7cd4f7bad90d4db586001c5dc09d4fde311", size = 31768, upload-time = "2024-02-26T16:10:59.415Z" }
 wheels = [
@@ -570,9 +570,9 @@ resolution-markers = [
     "python_full_version == '3.9'",
 ]
 dependencies = [
-    { name = "docutils", version = "0.21.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9'" },
-    { name = "nh3", marker = "python_full_version >= '3.9'" },
-    { name = "pygments", marker = "python_full_version >= '3.9'" },
+    { name = "docutils", version = "0.21.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "nh3" },
+    { name = "pygments" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5a/a9/104ec9234c8448c4379768221ea6df01260cd6c2ce13182d4eac531c8342/readme_renderer-44.0.tar.gz", hash = "sha256:8712034eabbfa6805cacf1402b4eeb2a73028f72d1166d6f5cb7f9c047c5d1e1", size = 32056, upload-time = "2024-07-08T15:00:57.805Z" }
 wheels = [
@@ -640,7 +640,7 @@ resolution-markers = [
     "python_full_version < '3.9'",
 ]
 dependencies = [
-    { name = "pycrypto", marker = "python_full_version <= '3.9'" },
+    { name = "pycrypto" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/24/af/50f2324784ee65e2b752624144249c7710e761be437dd82815ff86d3021f/SecretStorage-2.2.1.tar.gz", hash = "sha256:d771e99ada09e39aceb75c4bb2d460895627b2260ab24c9cb790fb8aad1ecab6", size = 15972, upload-time = "2016-06-27T19:37:45.887Z" }
 
@@ -652,8 +652,8 @@ resolution-markers = [
     "python_full_version > '3.9'",
 ]
 dependencies = [
-    { name = "cryptography", marker = "python_full_version > '3.9'" },
-    { name = "jeepney", marker = "python_full_version > '3.9'" },
+    { name = "cryptography" },
+    { name = "jeepney" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/53/a4/f48c9d79cb507ed1373477dbceaba7401fd8a23af63b837fa61f1dcd3691/SecretStorage-3.3.3.tar.gz", hash = "sha256:2403533ef369eca6d2ba81718576c5e0f564d5cca1b58f73a8b23e7d4eeebd77", size = 19739, upload-time = "2022-08-13T16:22:46.976Z" }
 wheels = [

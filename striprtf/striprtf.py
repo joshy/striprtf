@@ -13,7 +13,7 @@ destinations = frozenset((
     'atnparent','atnref','atntime','atrfend','atrfstart','author','background',
     'bkmkend','bkmkstart','blipuid','buptim','category','colorschememapping',
     'colortbl','comment','company','creatim','datafield','datastore','defchp','defpap',
-    'do','doccomm','docvar','dptxbxtext','ebcend','ebcstart','factoidname','falt',
+    'doccomm','docvar','ebcend','ebcstart','factoidname','falt',
     'fchars','ffdeftext','ffentrymcr','ffexitmcr','ffformat','ffhelptext','ffl',
     'ffname','ffstattext','file','filetbl','fldinst','fldtype','fonttbl',
     'fname','fontemb','fontfile','footer','footerf','footerl','footerr',
@@ -43,14 +43,20 @@ destinations = frozenset((
     'oldpprops','oldsprops','oldtprops','oleclsid','operator','panose','password',
     'passwordhash','pgp','pgptbl','picprop','pict','pn','pnseclvl','pntext','pntxta',
     'pntxtb','printim','private','propname','protend','protstart','protusertbl','pxe',
-    'result','revtbl','revtim','rsidtbl','rxe','shp','shpgrp','shpinst',
-    'shppict','shprslt','shptxt','sn','sp','staticval','stylesheet','subject','sv',
+    'result','revtbl','revtim','rsidtbl','rxe',
+    'shppict','shprslt','sn','sp','staticval','stylesheet','subject','sv',
     'svb','tc','template','themedata','title','txe','ud','upr','userprops',
     'wgrffmtfilter','windowcaption','writereservation','writereservhash','xe','xform',
     'xmlattrname','xmlattrvalue','xmlclose','xmlname','xmlnstbl',
     'xmlopen',
 ))
 # fmt: on
+# \* destinations whose text is part of the document: the text of text boxes and other
+# shapes ({\shp{\*\shpinst ...{\shptxt ...}}}) and of old style drawing objects
+# ({\*\do ...{\dptxbxtext ...}}). Inside them the shape properties (\sp, \sn, \sv)
+# are still ignored, and so is \shprslt, the copy of the shape for readers that do
+# not understand shapes (it would duplicate the text box text).
+transparent_destinations = frozenset(('shpinst', 'do'))
 charset_map = {
     0: "cp1252",  # Default
     42: "cp1252",  # Symbol
@@ -237,6 +243,7 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
     out = ""
     depth = 0  # Current group nesting level
     in_document = False  # Whether the outer document group has been entered
+    star = False  # Whether the previous token was \*
 
     # Simplified font table regex
     fonttbl_matches = FONTTABLE.findall(font_table_group(text))
@@ -248,6 +255,7 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
         }
     for match in PATTERN.finditer(text):
         word, arg, _hex, char, brace, tchar = match.groups()
+        after_star, star = star, False
         if hexes and not _hex:
             # Decode accumulated hexes
             out += bytes.fromhex(hexes).decode(
@@ -288,10 +296,14 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
                     out += specialchars[char]
             elif char == "*":
                 ignorable = True
+                star = True
         elif word:  # \foo
             curskip = 0
             if word in destinations:
                 ignorable = True
+            elif after_star and word in transparent_destinations and stack:
+                # undo the \*: the group is ignorable only if the enclosing group is
+                ignorable = stack[-1][1]
             # http://www.biblioscape.com/rtf15_spec.htm#Heading8
             elif word == "ansicpg":
                 encoding = f"cp{arg}"

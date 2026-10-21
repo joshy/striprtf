@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+  * Decode UTF-16 surrogate pairs in Unicode escapes as single characters, so
+    supplementary characters such as emoji can be encoded as UTF-8.
+
 ## v0.0.33 - 17.08.26
   * Bytes after the document closing brace are no longer part of the output. An rtf file is a single
     `{ <header> <document> }` group, everything after it is discarded like Word and WordPad do.

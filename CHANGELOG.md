@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+  * Decode UTF-16 surrogate pairs in Unicode escapes as single characters, so
+    supplementary characters such as emoji can be encoded as UTF-8.
+
 ## v0.0.35 - 24.10.26
   * Removed `idna`, which was accidentally added as a runtime dependency in v0.0.34. striprtf has
     no runtime dependencies again.

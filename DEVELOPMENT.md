@@ -86,24 +86,43 @@ Use this `launch.json` configuration for VS Code:
 }
 ```
 
-## Building and Publishing
+## Releasing a new version
 
-1. Build the package:
+1. Prepare the release commit on top of master. The working copy must contain only the release changes,
+   everything else would end up in the built package without being committed.
 ```sh
+jj new master
+# edit striprtf/_version.py  -> __version__ = "0.0.X"
+# edit CHANGELOG.md          -> add "## v0.0.X - DD.MM.YY" entry
+uv run pytest
+jj commit -m "new version v0.0.X"
+jj bookmark set master -r @-
+jj git push --bookmark master
+```
+
+2. Build from the committed state and check the metadata:
+```sh
+rm -rf dist
 uv build
+unzip -p dist/*.whl '*/METADATA' | grep -E '^(Version|Requires-Dist)'
+```
+   `Version` must be `0.0.X` and every `Requires-Dist` line must end with `extra == "dev"`.
+
+3. Publish with twine, tokens come from `~/.pypirc`. Twine is part of the `dev` extras, never run
+   `uv add twine`, that makes twine a runtime dependency:
+```sh
+uv run twine upload -r testpypi dist/*   # optional
+uv run twine upload -r pypi dist/*
 ```
 
-2. Publish the package 
-uv add twine
+4. Tag the release commit (a tag, not a bookmark) and push it:
+```sh
+jj tag set v0.0.X -r master
+git push origin refs/tags/v0.0.X
 ```
-twine upload -r testpypi dist/*
-twine upload -r pypi dist/*
 
-3. Tags
-```
-jj git set v0.0.31 -r master
-jj git export && git push origin v0.0.31
-```
+Dependabot alerts for dev or transitive packages are fixed with `uv lock --upgrade-package <name>`,
+never by adding the package to `[project] dependencies`.
 ## Project Structure
 
 - `striprtf/` - Main package directory

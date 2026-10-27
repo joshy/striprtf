@@ -1,0 +1,10 @@
+Text before the text box.
+Text inside the text box, café.
+Second line of the text box.
+Text after the text box.
+First box of the group.
+Second box of the group.
+Text after the group.
+Old style drawing object text box.
+Text after the drawing object.
+Text after the picture.

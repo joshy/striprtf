@@ -250,8 +250,9 @@ def rtf_to_text(text, encoding="cp1252", errors="strict"):
         word, arg, _hex, char, brace, tchar = match.groups()
         if hexes and not _hex:
             # Decode accumulated hexes
+            effective_font = current_font if current_font is not None else default_font
             out += bytes.fromhex(hexes).decode(
-                encoding=fonttbl.get(current_font, {"encoding": encoding}).get(
+                encoding=fonttbl.get(effective_font, {"encoding": encoding}).get(
                     "encoding", encoding
                 ),
                 errors=errors,
